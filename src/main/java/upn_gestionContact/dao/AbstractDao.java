@@ -34,8 +34,7 @@ abstract class AbstractDao<T> implements Dao<T> {
 
     @Override
     public List<T> findAll() {
-        Query query = entityManager.createQuery("FROM " + getGenericClass().getSimpleName()); // rien avant le from = *
-        return query.getResultList();
+       return entityManager.createNamedQuery(getGenericClass().getSimpleName()+".findAll").getResultList();
     }
 
     @Override
