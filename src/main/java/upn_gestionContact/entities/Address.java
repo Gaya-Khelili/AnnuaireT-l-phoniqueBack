@@ -1,38 +1,59 @@
 package upn_gestionContact.entities;
 
-public class Address {
-    private long idAddress;
-    private String Street,City,zip,Country;
+import javax.persistence.*;
+import java.io.Serializable;
 
-    public Address(String street, String city, String zip, String country) {
-        Street = street;
-        City = city;
+@Entity
+public class Address implements Serializable {
+
+/**
+ *
+ */
+private static final long serialVersionUID = -1020164386467891074L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id_address;
+    private String street, city, zip ,country;
+
+    @OneToOne(mappedBy="address")
+    private Contact contact;
+
+    public Address() {
+
+    }
+
+    public Address( String street, String city, String zip, String country) {
+
+        this.street = street;
+        this.city = city;
         this.zip = zip;
-        Country = country;
+        this.country = country;
+
     }
 
-    public long getIdAddress() {
-        return idAddress;
+    public long getId() {
+        return id_address;
     }
 
-    public void setIdAddress(long idAddress) {
-        this.idAddress = idAddress;
+    public void setId(long id_address) {
+        this.id_address = id_address;
     }
 
     public String getStreet() {
-        return Street;
+        return street;
     }
 
     public void setStreet(String street) {
-        Street = street;
+        this.street = street;
     }
 
     public String getCity() {
-        return City;
+        return city;
     }
 
     public void setCity(String city) {
-        City = city;
+        this.city = city;
     }
 
     public String getZip() {
@@ -44,10 +65,23 @@ public class Address {
     }
 
     public String getCountry() {
-        return Country;
+        return country;
     }
 
     public void setCountry(String country) {
-        Country = country;
+        this.country = country;
     }
+    public Contact getContact() {
+        return contact;
+    }
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
+    }
+    @Override
+    public String toString() {
+        return "Address [id_address=" + id_address + ", street=" + street + ", city=" + city + ", zip=" + zip + ", country="
+        + country + "]";
+    }
+
 }
