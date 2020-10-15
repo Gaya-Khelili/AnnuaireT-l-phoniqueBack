@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 import upn_gestionContact.entities.Contact;
 import java.util.Optional;
 
-
 @Repository
 public class ContactDAOImpl extends AbstractDao<Contact> {
 
