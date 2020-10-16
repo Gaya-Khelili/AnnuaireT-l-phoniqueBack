@@ -16,6 +16,7 @@ public abstract class AbstractController<T> implements Controller<T> {
         getService().save(t);
     }
 
+
     @Override
     @GetMapping
     public List<T> findAll() {

@@ -4,7 +4,6 @@ import org.springframework.stereotype.Repository;
 import upn_gestionContact.util.JpaUtil;
 
 import javax.persistence.EntityManager;
-import javax.persistence.Query;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.List;

@@ -12,7 +12,9 @@ http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 
         <!-- Entités -->
         <class>upn_gestionContact.entities.Contact</class>
-
+        <class>upn_gestionContact.entities.Address</class>
+        <class>upn_gestionContact.entities.ContactGroup</class>
+        <class>upn_gestionContact.entities.PhoneNumber</class>
         <properties>
             <!-- Login -->
             <property name="javax.persistence.jdbc.user" value="root" />
