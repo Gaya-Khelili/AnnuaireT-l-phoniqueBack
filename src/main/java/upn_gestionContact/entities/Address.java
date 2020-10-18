@@ -1,5 +1,8 @@
 package upn_gestionContact.entities;
 
+import org.hibernate.annotations.LazyToOne;
+import org.hibernate.annotations.LazyToOneOption;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -17,8 +20,10 @@ private static final long serialVersionUID = -1020164386467891074L;
     private long id_address;
     private String street, city, zip ,country;
 
-    @OneToOne(mappedBy="address")
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name="idcontact")
     private Contact contact;
+
     public Address() {
 
     }
@@ -72,6 +77,14 @@ private static final long serialVersionUID = -1020164386467891074L;
         this.country = country;
     }
 
+    public long getId_address() {
+        return id_address;
+    }
+
+    public void setId_address(long id_address) {
+        this.id_address = id_address;
+    }
+
     public Contact getContact() {
         return contact;
     }
@@ -79,6 +92,8 @@ private static final long serialVersionUID = -1020164386467891074L;
     public void setContact(Contact contact) {
         this.contact = contact;
     }
+
+
 
     @Override
     public String toString() {

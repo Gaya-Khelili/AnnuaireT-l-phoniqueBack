@@ -47,6 +47,7 @@ public class ContactGroup implements Serializable {
 
 
 
+
     @Override
     public String toString() {
         return "ContactGroup [groupId=" + groupId + ", groupName=" + groupName  + "]";

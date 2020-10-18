@@ -17,8 +17,9 @@ public class PhoneNumber implements Serializable {
     private long idPhoneNumber;
     private String phoneKind;
     private String phoneNumber;
+
     @ManyToOne
-    @JoinColumn(name="id_contact")
+    @JoinColumn(name="idcontact")
     private Contact contact = null;
 
 
@@ -47,6 +48,21 @@ public class PhoneNumber implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
+    public long getIdPhoneNumber() {
+        return idPhoneNumber;
+    }
+
+    public void setIdPhoneNumber(long idPhoneNumber) {
+        this.idPhoneNumber = idPhoneNumber;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
+
+    public void setContact(Contact contact) {
+        this.contact = contact;
+    }
 
     @Override
     public String toString() {

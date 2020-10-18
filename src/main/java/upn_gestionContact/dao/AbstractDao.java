@@ -12,7 +12,7 @@ import java.util.Optional;
 @Repository
 abstract class AbstractDao<T> implements Dao<T> {
 
-    private EntityManager entityManager = JpaUtil.getEntityManagerFactory().createEntityManager();
+    private EntityManager entityManager = openEntityManager();
 
     private Class<T> getGenericClass() { //retourne la classe passé à la place du T
         try {
@@ -37,10 +37,11 @@ abstract class AbstractDao<T> implements Dao<T> {
     }
 
     @Override
-    public void save(T entity) {
+    public Optional<T> save(T entity) {
         entityManager.getTransaction().begin();
         entityManager.persist(entity);
         entityManager.getTransaction().commit();
+        return Optional.ofNullable(entity);
     }
 
     @Override
@@ -61,4 +62,9 @@ abstract class AbstractDao<T> implements Dao<T> {
     public EntityManager getEntityManager() {
         return entityManager;
     }
+
+    public EntityManager openEntityManager(){
+        return JpaUtil.getEntityManagerFactory().createEntityManager();
+    }
+
 }

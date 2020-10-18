@@ -11,8 +11,6 @@ import java.util.Set;
 @NamedQuery(name="Contact.findAll", query="SELECT c FROM Contact c")
 public class Contact implements Serializable {
 
-
-
     /**
      *
      */
@@ -24,13 +22,13 @@ public class Contact implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_contact;
+    private long idcontact;
 
     @OneToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="id_address")
     private Address address;
 
-    @OneToMany(cascade=CascadeType.ALL,mappedBy="contact")
+    @OneToMany(cascade=CascadeType.ALL  ,mappedBy="contact",fetch = FetchType.LAZY)
     Set<PhoneNumber> phones =new HashSet<PhoneNumber>();
 
     @ManyToMany(cascade = CascadeType.PERSIST)
@@ -73,16 +71,41 @@ public class Contact implements Serializable {
         this.lname = lname;
     }
 
-    public Address getAddress() {
-        return address;
+    public long getIdcontact() {
+        return idcontact;
     }
-    public void setAddress(Address address) {
-        this.address = address;
+
+    public void setIdcontact(long idcontact) {
+        this.idcontact = idcontact;
+    }
+
+
+        public Address getAddress() {
+            return address;
+        }
+        public void setAddress(Address address) {
+            this.address = address;
+        }
+
+    public Set<PhoneNumber> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(Set<PhoneNumber> phones) {
+        this.phones = phones;
+    }
+
+    public Set<ContactGroup> getContactGroups() {
+        return contactGroups;
+    }
+
+    public void setContactGroups(Set<ContactGroup> contactGroups) {
+        this.contactGroups = contactGroups;
     }
 
     @Override
     public String toString() {
-        return "Contact [firstName=" + fname + ", lastName=" + lname + ", email=" + email + ", id_contact=" + id_contact + "]";
+        return "Contact [firstName=" + fname + ", lastName=" + lname + ", email=" + email + ", id_contact=" + idcontact + "]";
     }
 
 
