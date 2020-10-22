@@ -1,39 +1,36 @@
 package upn_gestionContact.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
-@NamedQuery(name="PhoneNumber.findAll", query="SELECT p FROM PhoneNumber p")
-public class PhoneNumber implements Serializable {
+@NamedQuery(name="PhoneNumber.findAll", query="SELECT p FROM Phone p")
+public class Phone implements Serializable {
     /**
      *
      */
     private static final long serialVersionUID = 8715943084142676443L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long idPhoneNumber;
+    private long idPhone;
     private String phoneKind;
     private String phoneNumber;
 
     @ManyToOne
     @JoinColumn(name="idcontact")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Contact contact = null;
 
-
-
-    public PhoneNumber() {
+    public Phone() {
 
     }
-    public PhoneNumber( String phoneKind, String phoneNumber) {
+    public Phone(String phoneKind, String phoneNumber) {
 
         this.phoneKind = phoneKind;
         this.phoneNumber = phoneNumber;
-
     }
-
 
     public String getPhoneKind() {
         return phoneKind;
@@ -48,12 +45,12 @@ public class PhoneNumber implements Serializable {
         this.phoneNumber = phoneNumber;
     }
 
-    public long getIdPhoneNumber() {
-        return idPhoneNumber;
+    public long getIdPhone() {
+        return idPhone;
     }
 
-    public void setIdPhoneNumber(long idPhoneNumber) {
-        this.idPhoneNumber = idPhoneNumber;
+    public void setIdPhone(long idPhone) {
+        this.idPhone = idPhone;
     }
 
     public Contact getContact() {
@@ -66,7 +63,7 @@ public class PhoneNumber implements Serializable {
 
     @Override
     public String toString() {
-        return "PhoneNumber [id=" + idPhoneNumber + ", phoneKind=" + phoneKind + ", phoneNumber=" + phoneNumber
+        return "PhoneNumber [id=" + idPhone + ", phoneKind=" + phoneKind + ", phoneNumber=" + phoneNumber
                 +  "]";
     }
 

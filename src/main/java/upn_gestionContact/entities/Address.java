@@ -1,8 +1,5 @@
 package upn_gestionContact.entities;
 
-import org.hibernate.annotations.LazyToOne;
-import org.hibernate.annotations.LazyToOneOption;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -17,12 +14,15 @@ private static final long serialVersionUID = -1020164386467891074L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_address;
+    private long idAddress;
     private String street, city, zip ,country;
 
+    /*
     @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name="idcontact")
     private Contact contact;
+
+     */
 
     public Address() {
 
@@ -37,12 +37,12 @@ private static final long serialVersionUID = -1020164386467891074L;
 
     }
 
-    public long getId() {
-        return id_address;
+    public long getIdAddress() {
+        return idAddress;
     }
 
-    public void setId(long id_address) {
-        this.id_address = id_address;
+    public void setIdAddress(long id_address) {
+        this.idAddress = id_address;
     }
 
     public String getStreet() {
@@ -76,7 +76,7 @@ private static final long serialVersionUID = -1020164386467891074L;
     public void setCountry(String country) {
         this.country = country;
     }
-
+/*
     public long getId_address() {
         return id_address;
     }
@@ -93,11 +93,13 @@ private static final long serialVersionUID = -1020164386467891074L;
         this.contact = contact;
     }
 
+ */
+
 
 
     @Override
     public String toString() {
-        return "Address [id_address=" + id_address + ", street=" + street + ", city=" + city + ", zip=" + zip + ", country="
+        return "Address [id_address=" + idAddress + ", street=" + street + ", city=" + city + ", zip=" + zip + ", country="
         + country + "]";
     }
 

@@ -5,6 +5,7 @@ import upn_gestionContact.services.Services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public abstract class AbstractController<T> implements Controller<T> {
     
@@ -26,6 +27,18 @@ public abstract class AbstractController<T> implements Controller<T> {
     @GetMapping(path = "{id}")
     public Optional<T> findById(@PathVariable("id") long id) {
         return getService().findById(id);
+    }
+
+    @Override
+    @GetMapping(path = "addressbycontact/{idContact}")
+    public Optional<T> findByIdContact(@PathVariable("idContact") long idContact) {
+        return getService().findByIdContact(idContact);
+    }
+
+    @Override
+    @GetMapping(path = "phonesbycontact/{idContact}")
+    public Set<T> findByIdContactList(@PathVariable("idContact") long idContact) {
+        return getService().findByIdContactList(idContact);
     }
 
     @Override
