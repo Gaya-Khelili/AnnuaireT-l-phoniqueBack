@@ -19,7 +19,7 @@ public class Phone implements Serializable {
     private String phoneNumber;
 
     @ManyToOne
-    @JoinColumn(name="idcontact")
+    @JoinColumn(name="idContact")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Contact contact = null;
 

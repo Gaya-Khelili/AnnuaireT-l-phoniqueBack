@@ -27,7 +27,7 @@ public class Contact implements Serializable {
     private long idContact;
 
     @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
-    @JoinColumn(name="id_address")
+    @JoinColumn(name="idAddress")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Address address;
 
