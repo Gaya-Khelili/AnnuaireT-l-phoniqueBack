@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@NamedQuery(name="PhoneNumber.findAll", query="SELECT p FROM Phone p")
+@NamedQuery(name="Phone.findAll", query="SELECT p FROM Phone p")
 public class Phone implements Serializable {
     /**
      *
