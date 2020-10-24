@@ -17,4 +17,9 @@ public class ContactControllerImpl extends AbstractController<Contact> {
     public Services<Contact> getService(){
         return contactService;
     }
+
+    @PostMapping(path="/fullcontact")
+    public void saveFullContact(@RequestBody Contact contact){
+        getService().saveFullContact(contact);
+    }
 }

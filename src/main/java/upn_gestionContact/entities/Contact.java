@@ -1,6 +1,8 @@
 package upn_gestionContact.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -10,8 +12,6 @@ import java.util.Set;
 @Entity
 @NamedQuery(name="Contact.findAll", query="SELECT c FROM Contact c")
 public class Contact implements Serializable {
-
-
 
     /**
      *
@@ -24,14 +24,16 @@ public class Contact implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id_contact;
+    private long idContact;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name="id_address")
+    @OneToOne(cascade = CascadeType.ALL,orphanRemoval = true)
+    @JoinColumn(name="idAddress")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Address address;
 
-    @OneToMany(cascade=CascadeType.ALL,mappedBy="contact")
-    Set<PhoneNumber> phones =new HashSet<PhoneNumber>();
+    @OneToMany(cascade=CascadeType.ALL  ,mappedBy="contact")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    Set<Phone> phones =new HashSet<Phone>();
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name="CTC_GRP",
@@ -41,11 +43,11 @@ public class Contact implements Serializable {
 
     public Contact(){
     }
+
     public Contact(String lastName, String firstName , String email) {
         this.lname = lastName;
         this.fname = firstName;
         this.email = email;
-
     }
 
     public String getEmail(){
@@ -73,16 +75,41 @@ public class Contact implements Serializable {
         this.lname = lname;
     }
 
-    public Address getAddress() {
-        return address;
+    public long getidContact() {
+        return idContact;
     }
+
+    public void setidContact(long idContact) {
+        this.idContact = idContact;
+    }
+
+    public Address getAddress() {
+            return address;
+        }
+
     public void setAddress(Address address) {
         this.address = address;
     }
 
+    public Set<Phone> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(Set<Phone> phones) {
+        this.phones = phones;
+    }
+/*
+    public Set<ContactGroup> getContactGroups() {
+        return contactGroups;
+    }
+*/
+    public void setContactGroups(Set<ContactGroup> contactGroups) {
+        this.contactGroups = contactGroups;
+    }
+
     @Override
     public String toString() {
-        return "Contact [firstName=" + fname + ", lastName=" + lname + ", email=" + email + ", id_contact=" + id_contact + "]";
+        return "Contact [firstName=" + fname + ", lastName=" + lname + ", email=" + email + ", id_contact=" + idContact + "]";
     }
 
 

@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 import upn_gestionContact.dao.Dao;
+
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 abstract class AbstractService<T> implements Services<T> {
@@ -19,6 +21,18 @@ abstract class AbstractService<T> implements Services<T> {
     }
 
     @Override
+    public Optional<T> findByIdContact(long id){
+        //à redéfinir
+        return Optional.empty();
+    }
+
+    @Override
+    public Set<T> findByIdContactList(long idContact){
+        //à redéfinir
+        return null;
+    }
+
+    @Override
     public List<T> findAll() {
         return dao.findAll();
     }
@@ -29,12 +43,25 @@ abstract class AbstractService<T> implements Services<T> {
     }
 
     @Override
-    public void delete(long id) {
+    public void delete(long id) { //redéfinir dans addressService et phoneService
         dao.delete(id);
     }
 
     @Override
     public void update(long id, T entity) {
         dao.update(id,entity);
+    }
+
+    @Override
+    public void saveFullContact(T contact){
+        //à override dans contactService
+    }
+
+    public Dao<T> getDao() {
+        return dao;
+    }
+
+    public void setDao(Dao<T> dao) {
+        this.dao = dao;
     }
 }

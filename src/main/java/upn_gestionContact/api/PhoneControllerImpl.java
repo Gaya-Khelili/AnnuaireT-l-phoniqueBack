@@ -3,19 +3,19 @@ package upn_gestionContact.api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import upn_gestionContact.entities.PhoneNumber;
-import upn_gestionContact.services.PhoneNumberServiceImpl;
+import upn_gestionContact.entities.Phone;
+import upn_gestionContact.services.PhoneServiceImpl;
 import upn_gestionContact.services.Services;
 
-@RequestMapping("api/phoneNumber")
+@RequestMapping("api/phone")
 @RestController
-public class PhoneNumberControllerImpl extends AbstractController<PhoneNumber>{
+public class PhoneControllerImpl extends AbstractController<Phone>{
 
     @Autowired
-    private PhoneNumberServiceImpl phoneNumberService;
+    private PhoneServiceImpl phoneNumberService;
 
     @Override
-    public Services<PhoneNumber> getService(){
+    public Services<Phone> getService(){
         return phoneNumberService;
     }
 }

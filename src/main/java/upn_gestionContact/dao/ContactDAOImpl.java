@@ -21,7 +21,7 @@ public class ContactDAOImpl extends AbstractDao<Contact> {
            actualContact.setfname(updatedContact.getfname());
            actualContact.setlname(updatedContact.getlname());
            actualContact.setEmail(updatedContact.getEmail());
-
+         //  actualContact.setAddress(updatedContact.getAddress());
            getEntityManager().getTransaction().commit();
        }
    }
