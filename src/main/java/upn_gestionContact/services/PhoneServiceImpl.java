@@ -22,9 +22,7 @@ public class PhoneServiceImpl extends AbstractService<Phone> {
              optionalContact.get().getPhones()
                     .forEach(phone -> {
                        Optional<Phone> optionalPhoneNumber = super.getDao().findById(phone.getIdPhone());
-                       if (optionalPhoneNumber.isPresent()){
-                           phones.add(optionalPhoneNumber.get());
-                       }
+                        optionalPhoneNumber.ifPresent(phones::add);
                     });
                  return phones;
         }

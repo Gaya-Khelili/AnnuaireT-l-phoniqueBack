@@ -1,12 +1,14 @@
 package upn_gestionContact.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import upn_gestionContact.entities.Phone;
 import upn_gestionContact.services.PhoneServiceImpl;
 import upn_gestionContact.services.Services;
 
+@CrossOrigin
 @RequestMapping("api/phone")
 @RestController
 public class PhoneControllerImpl extends AbstractController<Phone>{
