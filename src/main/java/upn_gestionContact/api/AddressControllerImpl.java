@@ -9,7 +9,7 @@ import upn_gestionContact.entities.Address;
 import upn_gestionContact.services.AddressServiceImpl;
 import upn_gestionContact.services.Services;
 
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("api/address")
 @RestController
 

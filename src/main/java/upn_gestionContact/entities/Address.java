@@ -17,12 +17,13 @@ private static final long serialVersionUID = -1020164386467891074L;
     private long idAddress;
     private String street, city, zip ,country;
 
-    /*
+    /**
     @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name="idcontact")
-    private Contact contact;
+    @JoinColumn(name="idContact")
+   @OneToOne(mappedBy="address")
+    private Contact contact;  **/
 
-     */
+
 
     public Address() {
 

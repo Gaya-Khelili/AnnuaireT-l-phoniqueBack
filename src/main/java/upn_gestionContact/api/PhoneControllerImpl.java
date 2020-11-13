@@ -8,7 +8,7 @@ import upn_gestionContact.entities.Phone;
 import upn_gestionContact.services.PhoneServiceImpl;
 import upn_gestionContact.services.Services;
 
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("api/phone")
 @RestController
 public class PhoneControllerImpl extends AbstractController<Phone>{

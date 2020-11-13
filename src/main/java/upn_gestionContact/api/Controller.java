@@ -9,6 +9,10 @@ public interface Controller<T>  {
     Optional<T> findById(long id);
     Optional<T> findByIdContact(long idContact);
     Set<T> findByIdContactList(long idContact);
+    //trouver tout les contacts qui appartiennent à un groupe
+    List<T> findByIdGroupContactList(long idGroupContact);
+    // pour trouver la liste des groups contacts
+    Set<T> findByIdList(long idContact);
     List<T> findAll();
     void save(T entity);
     void delete(long id);

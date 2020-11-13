@@ -15,6 +15,7 @@ public class Phone implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long idPhone;
+
     private String phoneKind;
     private String phoneNumber;
 

@@ -6,7 +6,7 @@ import upn_gestionContact.entities.Contact;
 import upn_gestionContact.services.ContactServiceImpl;
 import upn_gestionContact.services.Services;
 
-@CrossOrigin
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("api/contact")
 @RestController
 public class ContactControllerImpl extends AbstractController<Contact> {

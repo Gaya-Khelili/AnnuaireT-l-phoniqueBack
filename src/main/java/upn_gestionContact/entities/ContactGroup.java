@@ -1,6 +1,8 @@
 package upn_gestionContact.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -18,20 +20,19 @@ public class ContactGroup implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long groupId;
+
     private String groupName;
 
+
     @ManyToMany(mappedBy="contactGroups")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Contact> contacts = new HashSet<>();
 
 
     public ContactGroup() {
 
     }
-    public ContactGroup(String groupName) {
-
-        this.groupName = groupName;
-
-    }
+    public ContactGroup(String groupName) { this.groupName = groupName; }
     public long getGroupId() {
         return groupId;
     }
@@ -44,7 +45,12 @@ public class ContactGroup implements Serializable {
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
-
+    public Set<Contact> getContacts() {
+        return contacts;
+    }
+    public void setContacts(Set<Contact> contacts) {
+        this.contacts= contacts;
+    }
 
 
 
@@ -52,5 +58,6 @@ public class ContactGroup implements Serializable {
     public String toString() {
         return "ContactGroup [groupId=" + groupId + ", groupName=" + groupName  + "]";
     }
+
 
 }

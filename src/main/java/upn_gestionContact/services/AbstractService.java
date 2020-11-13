@@ -33,6 +33,17 @@ abstract class AbstractService<T> implements Services<T> {
     }
 
     @Override
+    public Set<T> findByIdList(long idContact){
+        //à redéfinir
+        return null;
+    }
+    @Override
+    //trouver tout les contacts qui appartiennent à un groupe
+    public List<T> findByIdGroupContactList(long idGroupContact){
+        //à redéfinir
+        return null;
+    }
+    @Override
     public List<T> findAll() {
         return dao.findAll();
     }
@@ -55,6 +66,10 @@ abstract class AbstractService<T> implements Services<T> {
     @Override
     public void saveFullContact(T contact){
         //à override dans contactService
+    }
+    @Override
+    public void saveFullGroupContact(T contactGroup,long idContact ){
+        //à override dans contactGroupService
     }
 
     public Dao<T> getDao() {
