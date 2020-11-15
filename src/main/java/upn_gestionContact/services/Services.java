@@ -17,5 +17,5 @@ public interface Services<T> {
     void delete(long id);
     void update(long id,T entity);
     void saveFullContact(T contact);
-    void saveFullGroupContact(T groupContact,long idContact);
+    void saveFullGroupContact(T groupContact);
 }

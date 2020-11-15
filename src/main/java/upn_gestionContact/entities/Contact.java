@@ -37,8 +37,8 @@ public class Contact implements Serializable {
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(name="CTC_GRP",
-            joinColumns=@JoinColumn(name="idContact"),
-            inverseJoinColumns=@JoinColumn(name="groupId"))
+            joinColumns=@JoinColumn(name="idc"),
+            inverseJoinColumns=@JoinColumn(name="Idg"))
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<ContactGroup> contactGroups = new HashSet<>();
 
@@ -103,14 +103,14 @@ public class Contact implements Serializable {
     public Set<ContactGroup> getContactGroups() {
         return contactGroups;
     }
-
-    public void setContactGroups(ContactGroup contactGroups) {
-        this.contactGroups.add(contactGroups);
+    public void setContactGroups(Set<ContactGroup> contactGroups) {
+        this.contactGroups=contactGroups;
     }
 
     @Override
     public String toString() {
-        return "Contact [firstName=" + fname + ", lastName=" + lname + ", email=" + email + ", id_contact=" + idContact + "]";
+        return "Contact [firstName=" + fname + ", lastName=" + lname +
+                ", email=" + email + ", id_contact=" + idContact + "]";
     }
 
 

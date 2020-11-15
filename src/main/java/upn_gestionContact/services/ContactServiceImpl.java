@@ -7,10 +7,7 @@ import upn_gestionContact.dao.ContactGroupDAOImpl;
 import upn_gestionContact.entities.Contact;
 import upn_gestionContact.entities.ContactGroup;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class ContactServiceImpl extends AbstractService<Contact> {
@@ -26,6 +23,12 @@ public class ContactServiceImpl extends AbstractService<Contact> {
     public void saveFullContact(Contact contact){
 
         contact.getPhones().forEach(phone -> phone.setContact(contact));
+        // pas le choix pour contourner le Set qu'il y a dans  setContact ( je ne peux pas le changer dans contact
+        // car ça ne marcherais pas pour faire le relation many to many entre contact et group
+        // en cour de modification
+        Set<Contact> contacts = new HashSet<>();
+        contacts.add(contact);
+        contact.getContactGroups().forEach(group -> group.setContacts(contacts));
 
         getDao().save(contact);
 

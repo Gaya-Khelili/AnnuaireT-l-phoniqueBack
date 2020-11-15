@@ -68,7 +68,7 @@ abstract class AbstractService<T> implements Services<T> {
         //à override dans contactService
     }
     @Override
-    public void saveFullGroupContact(T contactGroup,long idContact ){
+    public void saveFullGroupContact(T contactGroup ){
         //à override dans contactGroupService
     }
 

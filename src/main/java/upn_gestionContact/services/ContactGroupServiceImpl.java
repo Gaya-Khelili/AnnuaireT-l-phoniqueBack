@@ -22,7 +22,7 @@ public class ContactGroupServiceImpl   extends AbstractService<ContactGroup> {
         super();
     }
 
-    public void saveFullGroupContact(ContactGroup contactGroup,long idContact ){
+    public void saveFullGroupContact(ContactGroup contactGroup ){
         //à override dans contactGroupService
 
         getDao().save(contactGroup);

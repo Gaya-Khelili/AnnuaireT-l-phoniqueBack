@@ -47,7 +47,7 @@ public abstract class AbstractController<T> implements Controller<T> {
     public Set<T> findByIdContactList(@PathVariable("idContact") long idContact) {
         return getService().findByIdContactList(idContact);
     }
-    //trouver un group de contact avec l'id contact
+    //trouver les groups de contact avec l'id contact
     @Override
     @CrossOrigin(origins = "http://localhost:8080")
     @GetMapping(path = "contactGroupbycontact/{idContact}")
