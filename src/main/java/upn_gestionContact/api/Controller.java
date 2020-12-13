@@ -10,7 +10,7 @@ public interface Controller<T>  {
     Optional<T> findByIdContact(long idContact);
     Set<T> findByIdContactList(long idContact);
     //trouver tout les contacts qui appartiennent à un groupe
-    List<T> findByIdGroupContactList(long idGroupContact);
+    Set<T> findByIdGroupContactList(long groupId);
     // pour trouver la liste des groups contacts
     Set<T> findByIdList(long idContact);
     List<T> findAll();

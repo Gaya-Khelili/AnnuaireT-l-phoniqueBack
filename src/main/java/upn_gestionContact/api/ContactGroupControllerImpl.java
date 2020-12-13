@@ -14,14 +14,16 @@ public class ContactGroupControllerImpl  extends AbstractController<ContactGroup
     @Autowired
     private ContactGroupServiceImpl contactGroupService;
 
+    @Override
+    public Services<ContactGroup> getService(){
+        return contactGroupService;
+    }
+
     @PostMapping(path="/fullcontactgroup")
     public void saveFullGroupContact(@RequestBody ContactGroup contactGroup){
 
         getService().saveFullGroupContact(contactGroup);
     }
 
-    @Override
-    public Services<ContactGroup> getService(){
-        return contactGroupService;
-    }
+
 }

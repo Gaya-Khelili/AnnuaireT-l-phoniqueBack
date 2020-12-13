@@ -39,7 +39,7 @@ abstract class AbstractService<T> implements Services<T> {
     }
     @Override
     //trouver tout les contacts qui appartiennent à un groupe
-    public List<T> findByIdGroupContactList(long idGroupContact){
+    public Set<T> findByIdGroupContactList(long groupId){
         //à redéfinir
         return null;
     }
