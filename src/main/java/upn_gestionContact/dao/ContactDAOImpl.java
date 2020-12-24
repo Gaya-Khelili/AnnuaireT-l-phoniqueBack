@@ -2,10 +2,13 @@ package upn_gestionContact.dao;
 
 import org.springframework.stereotype.Repository;
 import upn_gestionContact.entities.Contact;
+import upn_gestionContact.entities.ContactGroup;
 
-import java.util.HashSet;
+
+
 import java.util.Optional;
 import java.util.Set;
+
 
 @Repository
 public class ContactDAOImpl extends AbstractDao<Contact> {
@@ -14,7 +17,20 @@ public class ContactDAOImpl extends AbstractDao<Contact> {
        super();
    }
 
-   @Override
+    @Override
+    public void delete(long id) {
+        Optional<Contact> contactOpt = super.findById(id);
+        getEntityManager().getTransaction().begin();
+        if (contactOpt.isPresent()) {
+            Contact contact = contactOpt.get();
+            contact.getContactGroups().forEach(contactGroup -> contactGroup.getContacts().remove(contact));
+            getEntityManager().remove(contact);
+            getEntityManager().getTransaction().commit();
+        }
+
+    }
+
+    @Override
     public void update(long id,Contact updatedContact){
        super.getEntityManager().getTransaction().begin();
 
@@ -33,11 +49,9 @@ public class ContactDAOImpl extends AbstractDao<Contact> {
            });
            actualContact.setPhones(updatedContact.getPhones());
 
-           Set<Contact> contactSet = new HashSet<Contact>();
-           contactSet.add(actualContact);
            updatedContact.getContactGroups().forEach(contactGroup -> {
-               contactGroup.setGroupId(actualContact.getContactGroups().iterator().next().getGroupId());
-               contactGroup.setContacts(contactSet);
+              contactGroup.setGroupId(actualContact.getContactGroups().iterator().next().getGroupId());
+              contactGroup.setContacts((Set<Contact>) actualContact);
            } );
            actualContact.setContactGroups(updatedContact.getContactGroups());
            getEntityManager().merge(actualContact);

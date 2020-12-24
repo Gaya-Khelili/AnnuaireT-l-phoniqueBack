@@ -1,6 +1,7 @@
 package upn_gestionContact.dao;
 
 import org.springframework.stereotype.Repository;
+import upn_gestionContact.entities.ContactGroup;
 import upn_gestionContact.util.JpaUtil;
 
 import javax.persistence.EntityManager;
@@ -37,7 +38,8 @@ abstract class AbstractDao<T> implements Dao<T> {
     }
 
     @Override
-    public Optional<T> save(T entity) {
+    public Optional<T> save(T entity)
+    {
         entityManager.getTransaction().begin();
         entityManager.persist(entity);
         entityManager.getTransaction().commit();
@@ -46,12 +48,7 @@ abstract class AbstractDao<T> implements Dao<T> {
 
     @Override
     public void delete(long id) {
-        Optional<T> entity = this.findById(id);
-        if (entity.isPresent()) {
-            entityManager.getTransaction().begin();
-            entityManager.remove(entity.get());
-            entityManager.getTransaction().commit();
-        }
+        // redéfinir dans contactDAOImpl et groupContactDAOImpl
     }
 
     @Override

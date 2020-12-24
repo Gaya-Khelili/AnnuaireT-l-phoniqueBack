@@ -24,7 +24,9 @@ public class ContactGroup implements Serializable {
     private String groupName;
 
 
-    @ManyToMany(mappedBy="contactGroups")
+
+
+    @ManyToMany(mappedBy="contactGroups",fetch = FetchType.EAGER)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Contact> contacts = new HashSet<>();
 
@@ -33,27 +35,35 @@ public class ContactGroup implements Serializable {
 
     }
     public ContactGroup(String groupName) { this.groupName = groupName; }
+
     public long getGroupId() {
-        return groupId;
+        return this.groupId;
     }
     public void setGroupId(long groupId) {
         this.groupId = groupId;
     }
+
     public String getGroupName() {
-        return groupName;
+        return this.groupName;
     }
     public void setGroupName(String groupName) {
         this.groupName = groupName;
     }
+
     public Set<Contact> getContacts() {
-        return contacts;
+        return this.contacts;
     }
     public void setContacts(Set<Contact> contacts) {
         this.contacts= contacts;
     }
-
-
-
+    public void addContact(Contact c){
+        this.contacts.add(c);
+        c.getContactGroups().add(this);
+    }
+    public void removeContact(Contact c){
+            this.contacts.remove(c);
+            c.getContactGroups().remove(this);
+    }
     @Override
     public String toString() {
         return "ContactGroup [groupId=" + groupId + ", groupName=" + groupName  + "]";

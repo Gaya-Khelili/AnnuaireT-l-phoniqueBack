@@ -54,7 +54,7 @@ abstract class AbstractService<T> implements Services<T> {
     }
 
     @Override
-    public void delete(long id) { //redéfinir dans addressService et phoneService
+    public void delete(long id) {
         dao.delete(id);
     }
 

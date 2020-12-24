@@ -19,7 +19,6 @@ public class AddressDAOImpl  extends AbstractDao<Address> {
 
         Optional<Address> actualAddressOpt = super.findById(id);
         if (actualAddressOpt.isPresent()){
-
             Address actualAddress = actualAddressOpt.get();
             actualAddress.setCity(updatedAddress.getCity());
             actualAddress.setCountry(updatedAddress.getCountry());

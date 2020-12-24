@@ -35,10 +35,10 @@ public class Contact implements Serializable {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     Set<Phone> phones =new HashSet<Phone>();
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
     @JoinTable(name="CTC_GRP",
-            joinColumns=@JoinColumn(name="idc"),
-            inverseJoinColumns=@JoinColumn(name="Idg"))
+            joinColumns=@JoinColumn(name="CTC_ID"),
+            inverseJoinColumns=@JoinColumn(name="GRP_ID"))
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<ContactGroup> contactGroups = new HashSet<>();
 
@@ -93,7 +93,7 @@ public class Contact implements Serializable {
     }
 
     public Set<Phone> getPhones() {
-        return phones;
+        return this.phones;
     }
 
     public void setPhones(Set<Phone> phones) {
@@ -101,10 +101,18 @@ public class Contact implements Serializable {
     }
 
     public Set<ContactGroup> getContactGroups() {
-        return contactGroups;
+        return this.contactGroups;
     }
     public void setContactGroups(Set<ContactGroup> contactGroups) {
         this.contactGroups=contactGroups;
+    }
+    public void addContactGroup(ContactGroup cg){
+        this.contactGroups.add(cg);
+        cg.getContacts().add(this);
+    }
+    public void removeContactGroup(ContactGroup cg){
+        this.contactGroups.remove(cg);
+        cg.getContacts().remove(this);
     }
 
     @Override

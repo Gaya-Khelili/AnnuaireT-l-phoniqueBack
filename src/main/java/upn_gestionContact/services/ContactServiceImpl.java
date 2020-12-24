@@ -7,6 +7,7 @@ import upn_gestionContact.entities.Contact;
 import upn_gestionContact.entities.ContactGroup;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ContactServiceImpl extends AbstractService<Contact> {
@@ -18,19 +19,14 @@ public class ContactServiceImpl extends AbstractService<Contact> {
     @Autowired
     private ContactGroupDAOImpl contactGroupDao;
 
+
     @Override
     public void saveFullContact(Contact contact){
+       /** contact.getContactGroups().forEach(contactGroup ->
+                contactGroup.getContacts().add(contact));**/
 
         contact.getPhones().forEach(phone -> phone.setContact(contact));
-        // pas le choix pour contourner le Set qu'il y a dans  setContact ( je ne peux pas le changer dans contact
-        // car ça ne marcherait pas pour faire le relation many to many entre contact et group
-        // en cour de modification
-        Set<Contact> contacts = new HashSet<>();
-        contacts.add(contact);
-        contact.getContactGroups().forEach(group -> group.setContacts(contacts));
-
         getDao().save(contact);
-
     }
       @Override
     //trouver tout les contacts qui appartiennent à un groupe
@@ -44,7 +40,6 @@ public class ContactServiceImpl extends AbstractService<Contact> {
                         Optional<Contact> optionalContact = super.getDao().findById(contact.getidContact());
                         optionalContact.ifPresent(contacts::add);
                     });
-            System.out.println("Contacts "+contacts.isEmpty());
             return contacts;
         }
             return null;
