@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import upn_gestionContact.dao.ContactDAOImpl;
 import upn_gestionContact.entities.Contact;
-import upn_gestionContact.entities.ContactGroup;
 import upn_gestionContact.entities.Phone;
 
 import java.util.*;

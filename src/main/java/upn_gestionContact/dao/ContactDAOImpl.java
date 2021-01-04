@@ -1,19 +1,21 @@
 package upn_gestionContact.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import upn_gestionContact.entities.Contact;
 import upn_gestionContact.entities.ContactGroup;
 
 
-
 import java.util.Optional;
-import java.util.Set;
+
 
 
 @Repository
 public class ContactDAOImpl extends AbstractDao<Contact> {
 
-   private ContactDAOImpl(){
+    @Autowired
+    private ContactGroupDAOImpl contactGroupDao;
+    private ContactDAOImpl(){
        super();
    }
 
@@ -23,7 +25,9 @@ public class ContactDAOImpl extends AbstractDao<Contact> {
         getEntityManager().getTransaction().begin();
         if (contactOpt.isPresent()) {
             Contact contact = contactOpt.get();
-            contact.getContactGroups().forEach(contactGroup -> contactGroup.getContacts().remove(contact));
+            contact.getContactGroups().forEach(contactGroup ->
+                    contactGroup.getContacts().remove(contact)
+            );
             getEntityManager().remove(contact);
             getEntityManager().getTransaction().commit();
         }
@@ -48,12 +52,15 @@ public class ContactDAOImpl extends AbstractDao<Contact> {
                newPhone.setContact(actualContact);
            });
            actualContact.setPhones(updatedContact.getPhones());
+           // update all groups in the contact
 
            updatedContact.getContactGroups().forEach(contactGroup -> {
-              contactGroup.setGroupId(actualContact.getContactGroups().iterator().next().getGroupId());
-              contactGroup.setContacts((Set<Contact>) actualContact);
+               Optional<ContactGroup> contactGroupOpt = contactGroupDao.findById(contactGroup.getGroupId());
+               contactGroupOpt.get().setGroupName(contactGroup.getGroupName());
+               //contactGroupOpt.get().getContacts().add(updatedContact);
+               actualContact.getContactGroups().add(contactGroupOpt.get());
            } );
-           actualContact.setContactGroups(updatedContact.getContactGroups());
+
            getEntityManager().merge(actualContact);
            getEntityManager().getTransaction().commit();
        }

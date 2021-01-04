@@ -36,13 +36,19 @@ abstract class AbstractDao<T> implements Dao<T> {
     public List<T> findAll() {
        return entityManager.createNamedQuery(getGenericClass().getSimpleName()+".findAll").getResultList();
     }
-
+    @Override
+    public Optional<T> saveWithContact(T entity){
+        return Optional.ofNullable(entity);
+    }
     @Override
     public Optional<T> save(T entity)
     {
-        entityManager.getTransaction().begin();
-        entityManager.persist(entity);
-        entityManager.getTransaction().commit();
+
+            entityManager.getTransaction().begin();
+            entityManager.persist(entity);
+            entityManager.getTransaction().commit();
+
+
         return Optional.ofNullable(entity);
     }
 

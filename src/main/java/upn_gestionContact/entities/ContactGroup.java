@@ -1,12 +1,12 @@
 package upn_gestionContact.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -23,16 +23,11 @@ public class ContactGroup implements Serializable {
 
     private String groupName;
 
-
-
-
-    @ManyToMany(mappedBy="contactGroups",fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "contactGroups", fetch = FetchType.EAGER)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Set<Contact> contacts = new HashSet<>();
-
+    private Set<Contact> contacts = new HashSet<Contact>();
 
     public ContactGroup() {
-
     }
     public ContactGroup(String groupName) { this.groupName = groupName; }
 
@@ -53,20 +48,17 @@ public class ContactGroup implements Serializable {
     public Set<Contact> getContacts() {
         return this.contacts;
     }
-    public void setContacts(Set<Contact> contacts) {
-        this.contacts= contacts;
+    public void setContacts( Set<Contact> contacts) {
+         this.contacts=contacts;
     }
-    public void addContact(Contact c){
-        this.contacts.add(c);
-        c.getContactGroups().add(this);
+    public void addContact(Contact contact) {
+        contacts.add(contact);
+        contact.getContactGroups().add(this);
     }
-    public void removeContact(Contact c){
-            this.contacts.remove(c);
-            c.getContactGroups().remove(this);
-    }
+
     @Override
     public String toString() {
-        return "ContactGroup [groupId=" + groupId + ", groupName=" + groupName  + "]";
+        return "ContactGroup [groupId=" + groupId + ", groupName=" + groupName  + "contact "+ contacts.stream().map(Contact::getidContact).collect(Collectors.toList()) + "]";
     }
 
 

@@ -7,6 +7,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 
 @Entity
@@ -31,16 +32,17 @@ public class Contact implements Serializable {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Address address;
 
-    @OneToMany(cascade=CascadeType.ALL  ,mappedBy="contact")
+    @OneToMany(cascade=CascadeType.PERSIST  ,mappedBy="contact")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     Set<Phone> phones =new HashSet<Phone>();
 
-    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.PERSIST)
+
+    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JoinTable(name="CTC_GRP",
             joinColumns=@JoinColumn(name="CTC_ID"),
             inverseJoinColumns=@JoinColumn(name="GRP_ID"))
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Set<ContactGroup> contactGroups = new HashSet<>();
+    private Set<ContactGroup> contactGroups = new HashSet<ContactGroup>();
 
     public Contact(){
     }
@@ -100,25 +102,18 @@ public class Contact implements Serializable {
         this.phones = phones;
     }
 
+
     public Set<ContactGroup> getContactGroups() {
         return this.contactGroups;
     }
-    public void setContactGroups(Set<ContactGroup> contactGroups) {
-        this.contactGroups=contactGroups;
-    }
-    public void addContactGroup(ContactGroup cg){
-        this.contactGroups.add(cg);
-        cg.getContacts().add(this);
-    }
-    public void removeContactGroup(ContactGroup cg){
-        this.contactGroups.remove(cg);
-        cg.getContacts().remove(this);
+    public void setContactGroups(Set<ContactGroup> groups) {
+         this.contactGroups=groups;
     }
 
     @Override
     public String toString() {
         return "Contact [firstName=" + fname + ", lastName=" + lname +
-                ", email=" + email + ", id_contact=" + idContact + "]";
+                ", email=" + email + ", id_contact=" + idContact + "contact group " +contactGroups.stream().map(ContactGroup::getGroupId).collect(Collectors.toList())+"]";
     }
 
 
