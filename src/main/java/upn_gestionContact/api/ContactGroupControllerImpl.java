@@ -25,7 +25,4 @@ public class ContactGroupControllerImpl  extends AbstractController<ContactGroup
 
        getService().saveFullGroupContact(contactGroup);
     }
-
-
-
 }

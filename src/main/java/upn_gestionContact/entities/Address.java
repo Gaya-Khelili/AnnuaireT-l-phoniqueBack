@@ -5,6 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @NamedQuery(name="Address.findAll", query="SELECT a FROM Address a")
+@NamedQuery(name="Address.search", query = "SELECT a FROM Address a WHERE a.street LIKE :criteria OR a.city LIKE :criteria OR a.zip LIKE : criteria OR a.country LIKE :criteria")
 public class Address implements Serializable {
 
 /**

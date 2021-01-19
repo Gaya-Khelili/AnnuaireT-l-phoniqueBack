@@ -99,6 +99,12 @@ abstract class AbstractDao<T> implements Dao<T> {
         //à redéfinir pour chaque classe car set sur les champs
     }
 
+    @Override
+    public  List<T> search(String criteria){
+        return entityManager.createNamedQuery(getGenericClass().getSimpleName()+".search")
+                .setParameter("criteria","%" + criteria + "%").getResultList();
+    }
+
     public EntityManager getEntityManager() {
         return entityManager;
     }

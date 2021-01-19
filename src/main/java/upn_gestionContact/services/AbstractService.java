@@ -90,4 +90,8 @@ abstract class AbstractService<T> implements Services<T> {
     public void setDao(Dao<T> dao) {
         this.dao = dao;
     }
+
+    public  List<T> search(String criteria){
+        return dao.search(criteria);
+    }
 }

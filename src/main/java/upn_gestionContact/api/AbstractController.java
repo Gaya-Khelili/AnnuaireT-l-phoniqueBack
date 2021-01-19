@@ -79,4 +79,10 @@ public abstract class AbstractController<T> implements Controller<T> {
     public void delete(@PathVariable("id") long id) {
         getService().delete(id);
     }
+
+    @Override
+    @GetMapping(path = "search/{criteria}")
+    public List<T> search(@PathVariable("criteria") String criteria){
+        return getService().search(criteria);
+    }
 }

@@ -18,7 +18,6 @@ public class ContactServiceImpl extends AbstractService<Contact> {
     @Override
     public void saveFullContact(Contact contact){
 
-
         contact.getPhones().forEach(phone -> phone.setContact(contact));
 
         getDao().save(contact);
