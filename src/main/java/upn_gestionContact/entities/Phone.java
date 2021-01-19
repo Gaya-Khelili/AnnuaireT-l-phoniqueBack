@@ -7,6 +7,7 @@ import java.io.Serializable;
 
 @Entity
 @NamedQuery(name="Phone.findAll", query="SELECT p FROM Phone p")
+@NamedQuery(name="Phone.search", query = "SELECT p FROM Phone p WHERE p.phoneKind LIKE :criteria OR p.phoneNumber LIKE :criteria")
 public class Phone implements Serializable {
     /**
      *

@@ -19,4 +19,5 @@ public interface Controller<T>  {
     void update(long id,T entity);
     void addContact(long idc, long idg);
     void removeContactFromGroup(long idc, long idg);
+    List<T> search(String criteria);
 }

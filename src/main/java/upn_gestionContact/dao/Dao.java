@@ -16,4 +16,5 @@ public interface Dao<T> {
     void addContact(long idC,long idG);
     void addContacts(long idG, Set<Contact> contact);
     void removeContactFromGroup(long idC,long idG);
+    List<T> search(String criteria);
 }

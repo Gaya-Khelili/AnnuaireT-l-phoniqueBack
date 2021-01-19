@@ -22,10 +22,7 @@ public class AddressServiceImpl extends AbstractService<Address>{
     @Override
     public Optional<Address> findByIdContact(long id){
         Optional<Contact> optionalContact = contactDao.findById(id);
-        if (optionalContact.isPresent()){
-            return super.getDao().findById(optionalContact.get().getAddress().getIdAddress());
-        }
-        return Optional.empty();
+        return optionalContact.map(contact -> Optional.ofNullable(contact.getAddress())).orElse(null);
     }
 
 }

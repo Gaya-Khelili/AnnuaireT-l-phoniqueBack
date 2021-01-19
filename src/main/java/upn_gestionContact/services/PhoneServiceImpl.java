@@ -17,15 +17,6 @@ public class PhoneServiceImpl extends AbstractService<Phone> {
     @Override
     public Set<Phone> findByIdContactList(long idContact){
         Optional<Contact> optionalContact = contactDao.findById(idContact);
-        if (optionalContact.isPresent()){
-            Set<Phone> phones = new HashSet<>();
-             optionalContact.get().getPhones()
-                    .forEach(phone -> {
-                       Optional<Phone> optionalPhoneNumber = super.getDao().findById(phone.getIdPhone());
-                        optionalPhoneNumber.ifPresent(phones::add);
-                    });
-                 return phones;
-        }
-        return null;
+        return optionalContact.map(Contact::getPhones).orElse(null);
     }
 }

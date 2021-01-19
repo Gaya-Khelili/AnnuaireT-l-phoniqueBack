@@ -22,4 +22,5 @@ public interface Services<T> {
     void saveFullGroupContact(T groupContact);
     void addContact(long idC,long idG);
     void removeContactFromGroup(long idC,long idG);
+    List<T> search(String criteria);
 }

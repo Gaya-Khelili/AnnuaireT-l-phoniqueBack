@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @NamedQuery(name="Contact.findAll", query="SELECT c FROM Contact c")
+@NamedQuery(name="Contact.search", query = "SELECT c FROM Contact c WHERE c.fname LIKE :criteria OR c.lname LIKE :criteria OR c.email LIKE : criteria")
 public class Contact implements Serializable {
 
     /**

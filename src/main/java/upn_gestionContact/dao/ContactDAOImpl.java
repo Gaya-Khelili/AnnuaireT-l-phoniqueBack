@@ -63,11 +63,10 @@ public class ContactDAOImpl extends AbstractDao<Contact> {
            actualContact.setfname(updatedContact.getfname());
            actualContact.setlname(updatedContact.getlname());
            actualContact.setEmail(updatedContact.getEmail());
-           updatedContact.getAddress().setIdAddress(actualContact.getAddress().getIdAddress());
+       //    updatedContact.getAddress().setIdAddress(actualContact.getAddress().getIdAddress());
            actualContact.setAddress(updatedContact.getAddress());
-           // à modifier car ne marche que pour 1 seul téléphone associé
+
            updatedContact.getPhones().forEach(newPhone -> {
-               newPhone.setIdPhone(actualContact.getPhones().iterator().next().getIdPhone());
                newPhone.setContact(actualContact);
            });
            actualContact.setPhones(updatedContact.getPhones());
