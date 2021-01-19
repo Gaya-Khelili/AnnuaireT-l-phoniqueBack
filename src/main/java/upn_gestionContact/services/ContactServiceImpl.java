@@ -18,9 +18,13 @@ public class ContactServiceImpl extends AbstractService<Contact> {
     @Override
     public void saveFullContact(Contact contact){
 
+
         contact.getPhones().forEach(phone -> phone.setContact(contact));
+
         getDao().save(contact);
     }
+
+
     //trouver tout les contacts qui appartiennent à un groupe
     @Override
   public Set<Contact> findByIdGroupContactList(long groupId){

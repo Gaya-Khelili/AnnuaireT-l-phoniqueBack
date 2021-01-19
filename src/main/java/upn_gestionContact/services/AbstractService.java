@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 import upn_gestionContact.dao.Dao;
+import upn_gestionContact.entities.Contact;
 
 import java.util.List;
 import java.util.Optional;
@@ -30,6 +31,16 @@ abstract class AbstractService<T> implements Services<T> {
     public Set<T> findByIdContactList(long idContact){
         //à redéfinir
         return null;
+    }
+
+    @Override
+    public void addContact(long idC, long idG) {
+        dao.addContact(idC,idG);
+    }
+
+    @Override
+    public void removeContactFromGroup(long idC, long idG) {
+        dao.removeContactFromGroup( idC, idG);
     }
 
     @Override

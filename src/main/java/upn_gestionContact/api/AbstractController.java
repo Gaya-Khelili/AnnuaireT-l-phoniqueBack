@@ -1,6 +1,7 @@
 package upn_gestionContact.api;
 
 import org.springframework.web.bind.annotation.*;
+import upn_gestionContact.dao.Dao;
 import upn_gestionContact.services.Services;
 
 import java.util.List;
@@ -35,6 +36,18 @@ public abstract class AbstractController<T> implements Controller<T> {
     @GetMapping(path = "addressbycontact/{idContact}")
     public Optional<T> findByIdContact(@PathVariable("idContact") long idContact) {
         return getService().findByIdContact(idContact);
+    }
+
+    @Override
+    @PostMapping("addContact/{idContact}/{idGroup}")
+    public void addContact(@PathVariable("idContact")long idc,@PathVariable("idGroup") long idg) {
+        getService().addContact(idc,idg);
+    }
+
+    @Override
+    @DeleteMapping("removeContact/{idContact}/{idGroup}")
+    public void removeContactFromGroup(@PathVariable("idContact")long idc,@PathVariable("idGroup") long idg) {
+        getService().removeContactFromGroup(idc,idg);
     }
 
     @Override

@@ -32,15 +32,15 @@ public class Contact implements Serializable {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Address address;
 
-    @OneToMany(cascade=CascadeType.PERSIST  ,mappedBy="contact")
+    @OneToMany(cascade=CascadeType.ALL  ,mappedBy="contact")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     Set<Phone> phones =new HashSet<Phone>();
 
 
-    @ManyToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.PERSIST )
     @JoinTable(name="CTC_GRP",
-            joinColumns=@JoinColumn(name="CTC_ID"),
-            inverseJoinColumns=@JoinColumn(name="GRP_ID"))
+            joinColumns={@JoinColumn(name="CTC_ID")},
+            inverseJoinColumns={@JoinColumn(name="GRP_ID")})
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<ContactGroup> contactGroups = new HashSet<ContactGroup>();
 
@@ -102,13 +102,29 @@ public class Contact implements Serializable {
         this.phones = phones;
     }
 
-
     public Set<ContactGroup> getContactGroups() {
         return this.contactGroups;
     }
-    public void setContactGroups(Set<ContactGroup> groups) {
-         this.contactGroups=groups;
+
+    public void setContactGroups(Set<ContactGroup> contactGroups) {
+        this.contactGroups=contactGroups;
     }
+
+    public void addContactGroup(ContactGroup contactGroup) {
+        if (contactGroups.contains(contactGroup))
+            return ;
+        contactGroup.getContacts().add(this);
+        contactGroups.add(contactGroup);
+
+    }
+    public void removeContactGroup(ContactGroup contactGroup) {
+        if (contactGroups.contains(contactGroup))
+            return ;
+        contactGroup.getContacts().remove(this);
+        contactGroups.remove(contactGroup);
+
+    }
+
 
     @Override
     public String toString() {

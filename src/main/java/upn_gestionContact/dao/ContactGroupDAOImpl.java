@@ -5,57 +5,88 @@ import org.springframework.stereotype.Repository;
 
 import upn_gestionContact.entities.Contact;
 import upn_gestionContact.entities.ContactGroup;
+
+
+import javax.persistence.EntityManager;
+import java.util.HashSet;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 
 @Repository
 public class ContactGroupDAOImpl extends AbstractDao<ContactGroup> {
 
+    @Autowired
+    private ContactDAOImpl contactDao;
+    @Autowired
+    private  ContactGroupDAOImpl contactGroupDAO;
     private ContactGroupDAOImpl(){
         super();
     }
-    @Autowired
-    private ContactDAOImpl contactDao;
 
-    @Override
-    public Optional<ContactGroup> save(ContactGroup cg){
+    // pas fini
+    // cas pas obligatoire
+    // créer un ccontactGroup avec des contacts existant pour éviter les addContact et les removesContacts
+ /**  @Override
+    public Optional<ContactGroup> save(ContactGroup contactGroup){
+            Set<Contact> sContact = new HashSet<Contact>();
+            contactGroup.getContacts().forEach(contact -> {
+                Optional<Contact> contactOpt = contactDao.findById(contact.getidContact());
+                sContact.add(contactOpt.get());
+            });
 
-        getEntityManager().getTransaction().begin();
-        System.out.println("avant persist"+cg.toString());
-        cg.getContacts().forEach(contact -> {System.out.println("avant persist"+contact.toString());
-
-        });
-
-        getEntityManager().persist(cg);
-
-        System.out.println("après persist"+cg.toString());
-        cg.getContacts().forEach(contact -> {System.out.println("après persist"+contact.toString());
-                    getEntityManager().merge(contact);
-        });
-
-
-        getEntityManager().getTransaction().commit();
+            EntityManager eM = getEntityManager();
+            eM.getTransaction().begin();
+            eM.persist(contactGroup);
+            eM.getTransaction().commit();
+            this.addContacts(contactGroup.getGroupId(),sContact);
 
 
-        return Optional.ofNullable(cg);
+        return Optional.ofNullable(contactGroup);
     }
+    //pas fini
+    @Override
+    public void addContacts(long idG, Set<Contact> contacts) {
+        Optional<ContactGroup> contactGroupOpt = super.findById(idG);
+        if (contactGroupOpt.isPresent()) {
+            getEntityManager().getTransaction().begin();
+            ContactGroup contactGroup = contactGroupOpt.get();
+            for (Contact c : contacts) {
+                c.addContactGroup(contactGroup);
+                getEntityManager().merge(c);
+
+            }
+            getEntityManager().merge(contactGroup);
+            getEntityManager().getTransaction().commit();
+
+        }
+    }**/
 
     @Override
     public void delete(long id) {
+
         Optional<ContactGroup> contactGroupOpt = super.findById(id);
         if(contactGroupOpt.isPresent()){
             getEntityManager().getTransaction().begin();
             ContactGroup contactGroup = contactGroupOpt.get();
-            contactGroup.getContacts().forEach(contact -> contact.getContactGroups().remove(contactGroup));
+            for(Contact c : contactGroup.getContacts()){
+                Optional<Contact> contactOpt = contactDao.findById(id);
+                contactOpt.get().setContactGroups(new HashSet<>());// à modifier pour supprimé proprement
+                    contactGroup.setContacts(new HashSet<>());
+                    getEntityManager().merge(contactOpt.get());
+            }
             getEntityManager().remove(contactGroup);
             getEntityManager().getTransaction().commit();
+
         }
+
+
+
     }
 
     @Override
     public void update(long id, ContactGroup updatedContactGroup){
-        getEntityManager().getTransaction().begin();
+        super.getEntityManager().getTransaction().begin();
 
         Optional<ContactGroup> actualContactGroupOpt = super.findById(id);
         if (actualContactGroupOpt.isPresent()) {
@@ -63,16 +94,14 @@ public class ContactGroupDAOImpl extends AbstractDao<ContactGroup> {
             actualContactGroup.setGroupName(updatedContactGroup.getGroupName());
             //update all contacts in the group
             updatedContactGroup.getContacts().forEach(contact -> {
-                Optional<Contact> contactOpt = contactDao.findById(contact.getidContact());
-
-                actualContactGroup.addContact(contactOpt.get());
-                contactOpt.get().getContactGroups().add(actualContactGroup);
-                getEntityManager().merge(contactOpt.get());
+               Optional<Contact> optionalContact = contactDao.findById(contact.getidContact());
+                optionalContact.get().addContactGroup(actualContactGroup);
+                super.getEntityManager().merge(optionalContact.get());
 
             } );
 
-            getEntityManager().merge(actualContactGroup);
-            getEntityManager().getTransaction().commit();
+            super.getEntityManager().merge(actualContactGroup);
+            super.getEntityManager().getTransaction().commit();
 
 
         }

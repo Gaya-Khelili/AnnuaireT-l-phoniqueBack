@@ -1,5 +1,7 @@
 package upn_gestionContact.services;
 
+import upn_gestionContact.entities.Contact;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -18,4 +20,6 @@ public interface Services<T> {
     void update(long id,T entity);
     void saveFullContact(T contact);
     void saveFullGroupContact(T groupContact);
+    void addContact(long idC,long idG);
+    void removeContactFromGroup(long idC,long idG);
 }

@@ -17,13 +17,15 @@ public class ContactGroup implements Serializable {
      *
      */
     private static final long serialVersionUID = -7302793512149305504L;
+
+
+    private String groupName;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long groupId;
 
-    private String groupName;
-
-    @ManyToMany(mappedBy = "contactGroups", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "contactGroups")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Contact> contacts = new HashSet<Contact>();
 
@@ -51,9 +53,20 @@ public class ContactGroup implements Serializable {
     public void setContacts( Set<Contact> contacts) {
          this.contacts=contacts;
     }
+
     public void addContact(Contact contact) {
-        contacts.add(contact);
+        if (contacts.contains(contact))
+            return ;
         contact.getContactGroups().add(this);
+        contacts.add(contact);
+
+    }
+    public void  removeContact(Contact contact) {
+        if (contacts.contains(contact))
+            return ;
+        contact.getContactGroups().remove(this);
+        contacts.remove(contact);
+
     }
 
     @Override
