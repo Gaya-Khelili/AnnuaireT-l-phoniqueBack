@@ -18,24 +18,8 @@ private static final long serialVersionUID = -1020164386467891074L;
     private long idAddress;
     private String street, city, zip ,country;
 
-    /**
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(name="idContact")
-   @OneToOne(mappedBy="address")
-    private Contact contact;  **/
-
-
 
     public Address() {
-
-    }
-
-    public Address( String street, String city, String zip, String country) {
-
-        this.street = street;
-        this.city = city;
-        this.zip = zip;
-        this.country = country;
 
     }
 
@@ -78,26 +62,6 @@ private static final long serialVersionUID = -1020164386467891074L;
     public void setCountry(String country) {
         this.country = country;
     }
-/*
-    public long getId_address() {
-        return id_address;
-    }
-
-    public void setId_address(long id_address) {
-        this.id_address = id_address;
-    }
-
-    public Contact getContact() {
-        return contact;
-    }
-
-    public void setContact(Contact contact) {
-        this.contact = contact;
-    }
-
- */
-
-
 
     @Override
     public String toString() {

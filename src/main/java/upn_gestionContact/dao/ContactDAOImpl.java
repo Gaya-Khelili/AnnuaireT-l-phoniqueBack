@@ -84,4 +84,12 @@ public class ContactDAOImpl extends AbstractDao<Contact> {
            getEntityManager().getTransaction().commit();
        }
    }
+
+
+    public Contact getContactByIdAddress(long idAddress){
+        return  (Contact) super.getEntityManager()
+                .createQuery("SELECT c FROM Contact c WHERE c.address.idAddress = :idAddress")
+                .setParameter("idAddress",idAddress).getSingleResult();
+
+    }
 }

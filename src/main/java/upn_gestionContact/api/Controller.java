@@ -1,5 +1,7 @@
 package upn_gestionContact.api;
 
+import upn_gestionContact.entities.Contact;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -19,5 +21,5 @@ public interface Controller<T>  {
     void update(long id,T entity);
     void addContact(long idc, long idg);
     void removeContactFromGroup(long idc, long idg);
-    List<T> search(String criteria);
+    List<Contact> search(String criteria);
 }

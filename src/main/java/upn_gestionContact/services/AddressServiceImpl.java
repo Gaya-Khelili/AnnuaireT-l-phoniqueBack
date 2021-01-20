@@ -6,6 +6,8 @@ import upn_gestionContact.dao.ContactDAOImpl;
 import upn_gestionContact.entities.Address;
 import upn_gestionContact.entities.Contact;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -23,6 +25,17 @@ public class AddressServiceImpl extends AbstractService<Address>{
     public Optional<Address> findByIdContact(long id){
         Optional<Contact> optionalContact = contactDao.findById(id);
         return optionalContact.map(contact -> Optional.ofNullable(contact.getAddress())).orElse(null);
+    }
+
+    @Override
+    public List<Contact> search(String criteria){
+        List<Address> addresses =  getDao().search(criteria);
+        List<Contact> associatedContact = new ArrayList<>();
+
+        addresses.forEach(address -> {
+            associatedContact.add(contactDao.getContactByIdAddress(address.getIdAddress()));
+        });
+        return associatedContact;
     }
 
 }

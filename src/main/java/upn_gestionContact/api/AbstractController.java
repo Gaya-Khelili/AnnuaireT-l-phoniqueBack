@@ -2,6 +2,7 @@ package upn_gestionContact.api;
 
 import org.springframework.web.bind.annotation.*;
 import upn_gestionContact.dao.Dao;
+import upn_gestionContact.entities.Contact;
 import upn_gestionContact.services.Services;
 
 import java.util.List;
@@ -82,7 +83,8 @@ public abstract class AbstractController<T> implements Controller<T> {
 
     @Override
     @GetMapping(path = "search/{criteria}")
-    public List<T> search(@PathVariable("criteria") String criteria){
+    public List<Contact> search(@PathVariable("criteria") String criteria){
+
         return getService().search(criteria);
     }
 }

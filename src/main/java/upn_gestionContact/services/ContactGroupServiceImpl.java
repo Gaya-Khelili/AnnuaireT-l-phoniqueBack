@@ -24,7 +24,7 @@ public class ContactGroupServiceImpl   extends AbstractService<ContactGroup> {
         getDao().addContact(idC, idG);
     }
 
-   /** @Override
+    /** @Override
     public void saveFullGroupContact(ContactGroup contactGroup){
                 // dans cette méthode je prend tout les contacts que l'utilsiateur veut rajouter pendant
                 // la création du group avec un find de la BDD, ensuite je le met dans le contact group

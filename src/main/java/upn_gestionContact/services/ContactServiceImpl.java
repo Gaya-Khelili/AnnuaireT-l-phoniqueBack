@@ -41,6 +41,11 @@ public class ContactServiceImpl extends AbstractService<Contact> {
             return null;
     }
 
+    @Override
+    public  List<Contact> search(String criteria){
+        return super.getDao().search(criteria);
+    }
+
 }
 
 

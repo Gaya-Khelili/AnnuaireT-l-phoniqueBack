@@ -91,7 +91,8 @@ abstract class AbstractService<T> implements Services<T> {
         this.dao = dao;
     }
 
-    public  List<T> search(String criteria){
-        return dao.search(criteria);
+    @Override
+    public List<Contact> search(String criteria) {
+        return null; // redef pour address contact et phone
     }
 }

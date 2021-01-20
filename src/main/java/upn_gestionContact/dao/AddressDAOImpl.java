@@ -2,6 +2,7 @@ package upn_gestionContact.dao;
 
 import org.springframework.stereotype.Repository;
 import upn_gestionContact.entities.Address;
+import upn_gestionContact.entities.Contact;
 
 import java.util.Optional;
 
@@ -27,4 +28,5 @@ public class AddressDAOImpl  extends AbstractDao<Address> {
             getEntityManager().getTransaction().commit();
         }
     }
+
 }
