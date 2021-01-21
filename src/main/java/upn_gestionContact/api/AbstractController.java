@@ -3,6 +3,7 @@ package upn_gestionContact.api;
 import org.springframework.web.bind.annotation.*;
 import upn_gestionContact.dao.Dao;
 import upn_gestionContact.entities.Contact;
+import upn_gestionContact.entities.ContactGroup;
 import upn_gestionContact.services.Services;
 
 import java.util.List;
@@ -81,10 +82,31 @@ public abstract class AbstractController<T> implements Controller<T> {
         getService().delete(id);
     }
 
+
     @Override
     @GetMapping(path = "search/{criteria}")
     public List<Contact> search(@PathVariable("criteria") String criteria){
 
         return getService().search(criteria);
     }
+
+    @Override
+    @PutMapping(path = "/contactGroup")
+    public void updateContactGroup(@RequestBody ContactGroup updatedContactGroup) {
+        getService().updateContactGroup(updatedContactGroup);
+    }
+
+    @Override
+    @PutMapping(path="/addContacts")
+    public void addContacts(@RequestBody ContactGroup contactGroup) {
+        getService().addContacts(contactGroup);
+    }
+
+    @Override
+    @DeleteMapping(path = "contactGroup/{id}")
+    public void deleteContactGroup(@PathVariable("id")long id) {
+        getService().deleteContactGroup(id);
+    }
+
+
 }

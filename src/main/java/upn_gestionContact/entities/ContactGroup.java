@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 @Entity
 @NamedQuery(name="ContactGroup.findAll", query="SELECT cG FROM ContactGroup cG")
+@NamedQuery(name="ContactGroup.search", query = "SELECT cG FROM ContactGroup cG WHERE cG.groupName LIKE :criteria")
 public class ContactGroup implements Serializable {
 
     /**

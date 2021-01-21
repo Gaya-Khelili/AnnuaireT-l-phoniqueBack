@@ -1,6 +1,7 @@
 package upn_gestionContact.services;
 
 import upn_gestionContact.entities.Contact;
+import upn_gestionContact.entities.ContactGroup;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +22,9 @@ public interface Services<T> {
     void saveFullContact(T contact);
     void saveFullGroupContact(T groupContact);
     void addContact(long idC,long idG);
+    void addContacts(ContactGroup entity);
     void removeContactFromGroup(long idC,long idG);
     List<Contact> search(String criteria);
+    void updateContactGroup(ContactGroup updatedContactGroup);
+    void deleteContactGroup(long id);
 }

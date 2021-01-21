@@ -3,6 +3,7 @@ package upn_gestionContact.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import upn_gestionContact.dao.ContactDAOImpl;
+import upn_gestionContact.dao.ContactGroupDAOImpl;
 import upn_gestionContact.entities.Contact;
 import upn_gestionContact.entities.ContactGroup;
 import java.util.*;
@@ -13,7 +14,8 @@ public class ContactGroupServiceImpl   extends AbstractService<ContactGroup> {
 
     @Autowired
     private ContactDAOImpl contactDao;
-
+    @Autowired
+    private ContactGroupDAOImpl contactGroupDao;
 
     public ContactGroupServiceImpl() {
         super();

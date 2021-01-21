@@ -3,8 +3,12 @@ package upn_gestionContact.services;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
+import upn_gestionContact.dao.ContactDAOImpl;
+import upn_gestionContact.dao.ContactGroupDAOImpl;
 import upn_gestionContact.dao.Dao;
 import upn_gestionContact.entities.Contact;
+import upn_gestionContact.entities.ContactGroup;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +16,10 @@ import java.util.Set;
 
 @Service
 abstract class AbstractService<T> implements Services<T> {
-
+    @Autowired
+    private ContactDAOImpl contactDao;
+    @Autowired
+    private ContactGroupDAOImpl contactGroupDao;
     @Autowired
     private Dao<T> dao;
 
@@ -37,6 +44,8 @@ abstract class AbstractService<T> implements Services<T> {
     public void addContact(long idC, long idG) {
         dao.addContact(idC,idG);
     }
+
+
 
     @Override
     public void removeContactFromGroup(long idC, long idG) {
@@ -78,10 +87,7 @@ abstract class AbstractService<T> implements Services<T> {
     public void saveFullContact(T contact){
         //à override dans contactService
     }
-    @Override
-    public void saveFullGroupContact(T contactGroup ){
-        //à override dans contactGroupService
-    }
+
 
     public Dao<T> getDao() {
         return dao;
@@ -94,5 +100,35 @@ abstract class AbstractService<T> implements Services<T> {
     @Override
     public List<Contact> search(String criteria) {
         return null; // redef pour address contact et phone
+    }
+
+    @Override
+    public void updateContactGroup( ContactGroup updatedContactGroup) {
+        Optional<ContactGroup>  cg = contactGroupDao.findById(updatedContactGroup.getGroupId());
+        cg.get().setGroupName(updatedContactGroup.getGroupName());
+        updatedContactGroup.getContacts().forEach(contact -> {
+            Optional<Contact>  c = contactDao.findById(contact.getidContact());
+            cg.get().getContacts().add(c.get());
+        });
+
+        this.dao.updateContactGroup(cg.get());
+
+    }
+    @Override
+    public void addContacts(ContactGroup entity) {
+        Optional<ContactGroup>  cg = contactGroupDao.findById(entity.getGroupId());
+
+        entity.getContacts().forEach(contact -> {
+            Optional<Contact>  c = contactDao.findById(contact.getidContact());
+            cg.get().getContacts().add(c.get());
+        });
+        this.dao.addContacts(cg.get());
+    }
+
+    @Override
+    public void deleteContactGroup(long id) {
+
+
+        this.dao.deleteContactGroup(id);
     }
 }
