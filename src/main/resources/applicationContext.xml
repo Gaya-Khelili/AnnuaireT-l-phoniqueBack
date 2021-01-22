@@ -11,6 +11,8 @@
         <property name="fname" value="Gaya"/>
         <property name="lname" value="Khelili"/>
         <property name="email" value="Gaya.khelili@parisnanterre.fr"/>
+        <property name="address" ref="address1"/>
+        <property name="phones" ref="phones"/>
     </bean>
 
     <bean id="address1" class="upn_gestionContact.entities.Address">
@@ -23,11 +25,22 @@
     <bean id="phone1" class="upn_gestionContact.entities.Phone">
         <property name="phoneKind" value="perso"/>
         <property name="phoneNumber" value="0758329795"/>
+        <property name="contact" ref="contact1"/>
     </bean>
 
     <bean id="phone2" class="upn_gestionContact.entities.Phone">
         <property name="phoneKind" value="prop"/>
         <property name="phoneNumber" value="0658757575"/>
+        <property name="contact" ref="contact1"/>
+    </bean>
+
+    <bean id="phones" class="java.util.HashSet">
+        <constructor-arg>
+            <set>
+                <ref bean="phone1" />
+                <ref bean="phone2" />
+            </set>
+        </constructor-arg>
     </bean>
 
     <bean id="group1" class="upn_gestionContact.entities.ContactGroup">
