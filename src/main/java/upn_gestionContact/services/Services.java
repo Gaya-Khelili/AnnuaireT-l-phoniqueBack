@@ -23,4 +23,6 @@ public interface Services<T> {
     void addContact(long idC,long idG);
     void removeContactFromGroup(long idC,long idG);
     List<Contact> search(String criteria);
+
+    void fillDatabase();
 }

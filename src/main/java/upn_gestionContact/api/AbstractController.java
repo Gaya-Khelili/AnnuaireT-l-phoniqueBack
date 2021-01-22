@@ -87,4 +87,11 @@ public abstract class AbstractController<T> implements Controller<T> {
 
         return getService().search(criteria);
     }
+
+    @Override
+    @PostMapping(path = "fillDB")
+    public void fillDatabase()
+    {
+        getService().fillDatabase();
+    }
 }

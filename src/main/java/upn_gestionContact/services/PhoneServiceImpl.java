@@ -3,7 +3,6 @@ package upn_gestionContact.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import upn_gestionContact.dao.ContactDAOImpl;
-import upn_gestionContact.entities.Address;
 import upn_gestionContact.entities.Contact;
 import upn_gestionContact.entities.Phone;
 
@@ -30,8 +29,8 @@ public class PhoneServiceImpl extends AbstractService<Phone> {
         searchedPhone.forEach(phone -> {
             Contact c = new Contact();
             c.setidContact(phone.getContact().getidContact());
-            c.setfname(phone.getContact().getfname());
-            c.setlname(phone.getContact().getlname());
+            c.setFname(phone.getContact().getfname());
+            c.setLname(phone.getContact().getlname());
             c.setEmail(phone.getContact().getEmail());
             associatedContact.add(c);
         });
