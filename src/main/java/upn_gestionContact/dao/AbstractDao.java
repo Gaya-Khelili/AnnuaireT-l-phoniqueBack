@@ -34,13 +34,47 @@ abstract class AbstractDao<T> implements Dao<T> {
         return null;
     }
 
+
+    @Override
+    public Optional<T> findById(long id) {
+        return Optional.ofNullable(entityManager.find(getGenericClass(), id));
+    }
+
+    @Override
+    public List<T> findAll() {
+       return entityManager.createNamedQuery(getGenericClass().getSimpleName()+".findAll").getResultList();
+    }
+
+
+
+    @Override
+    public Optional<T> save(T entity)
+    {
+        getGenericClass();
+
+        entityManager.getTransaction().begin();
+            entityManager.persist(entity);
+            entityManager.getTransaction().commit();
+
+        return Optional.ofNullable(entity);
+    }
+    @Override
+    public void delete(long id) {
+        // redéfinir dans contactDAOImpl et groupContactDAOImpl
+    }
+
+
+    @Override
+    public void update(long id,T entity) {
+        //à redéfinir pour chaque classe car set sur les champs
+    }
     @Override
     public void addContact(long idC, long idG) {
         Optional<Contact> optionContact = contactDao.findById(idC);
         Optional<ContactGroup> optionContactGroup =  contactGroupDao.findById(idG);
 
         optionContact.get().addContactGroup(optionContactGroup.get());
-        optionContactGroup.get().addContact(optionContact.get());
+        // optionContactGroup.get().addContact(optionContact.get());
 
         entityManager.getTransaction().begin();
         entityManager.merge( optionContact.get());
@@ -58,46 +92,13 @@ abstract class AbstractDao<T> implements Dao<T> {
         optionContact.get().setContactGroups(new HashSet<>());//à modifier pour supprimé proprement
         optionContactGroup.get().setContacts(new HashSet<>());
         entityManager.getTransaction().begin();
-       // entityManager.remove( optionContact.get());
-       entityManager.merge(optionContactGroup.get());
+        // entityManager.remove( optionContact.get());
+        entityManager.merge(optionContactGroup.get());
         entityManager.merge(optionContact.get());
 
         entityManager.getTransaction().commit();
     }
 
-    @Override
-    public Optional<T> findById(long id) {
-        return Optional.ofNullable(entityManager.find(getGenericClass(), id));
-    }
-
-    @Override
-    public List<T> findAll() {
-       return entityManager.createNamedQuery(getGenericClass().getSimpleName()+".findAll").getResultList();
-    }
-    // rajouter * contacts dans un groups en mm temps
-    @Override
-    public void addContacts(long idG, Set<Contact> contact) {
-
-    }
-
-    @Override
-    public Optional<T> save(T entity)
-    {
-            entityManager.getTransaction().begin();
-            entityManager.persist(entity);
-            entityManager.getTransaction().commit();
-
-        return Optional.ofNullable(entity);
-    }
-    @Override
-    public void delete(long id) {
-        // redéfinir dans contactDAOImpl et groupContactDAOImpl
-    }
-
-    @Override
-    public void update(long id,T entity) {
-        //à redéfinir pour chaque classe car set sur les champs
-    }
 
     @Override
     public  List<T> search(String criteria){
@@ -105,9 +106,73 @@ abstract class AbstractDao<T> implements Dao<T> {
                 .setParameter("criteria","%" + criteria + "%").getResultList();
     }
 
-    public EntityManager getEntityManager() {
-        return entityManager;
+    @Override
+    public void updateContactGroup( ContactGroup updatedContactGroup) {
+
+        entityManager.getTransaction().begin();
+        //update all contacts in the group
+        updatedContactGroup.getContacts().forEach(contact -> {
+            contact.addContactGroup(updatedContactGroup);
+            entityManager.merge(contact);
+
+        });
+
+        entityManager.merge(updatedContactGroup);
+        entityManager.getTransaction().commit();
+
+
     }
+    @Override
+    public void addContacts(ContactGroup cg) {
+
+        entityManager.getTransaction().begin();
+
+        cg.getContacts().forEach(contact -> {
+            contact.addContactGroup(cg);
+            entityManager.merge(contact);
+        });
+
+        entityManager.merge(cg);
+        entityManager.getTransaction().commit();
+    }
+
+
+    @Override
+    public void deleteContactGroup(long id) {
+
+        Optional<ContactGroup>  cg = contactGroupDao.findById(id);
+
+        if(cg.isPresent()){
+
+            ContactGroup group = cg.get();
+            entityManager.getTransaction().begin();
+
+
+            group.getContacts().forEach( contact -> {
+                    Set<ContactGroup> cgH = new HashSet<ContactGroup>();
+                   contact.getContactGroups().forEach(contactGroup -> {
+                       if(contactGroup.getGroupId()!=group.getGroupId()){
+                           cgH.add(contactGroup);
+                       }
+                   });
+                   contact.setContactGroups(cgH);
+                  // contact.setContactGroups(new HashSet<>());
+                   entityManager.merge(contact);
+            });
+
+            group.setContacts(new HashSet<>());
+            entityManager.merge(group);
+            entityManager.remove(group);
+            entityManager.getTransaction().commit();
+        }
+
+
+        }
+
+
+        public EntityManager getEntityManager() {
+        return entityManager;
+     }
 
     public EntityManager openEntityManager(){
         return JpaUtil.getEntityManagerFactory().createEntityManager();

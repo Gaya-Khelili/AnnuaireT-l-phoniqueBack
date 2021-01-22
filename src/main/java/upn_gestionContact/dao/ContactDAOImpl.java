@@ -6,6 +6,10 @@ import upn_gestionContact.entities.Contact;
 
 
 import javax.persistence.EntityManager;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import upn_gestionContact.entities.Contact;
 import java.util.Optional;
 
 
@@ -19,19 +23,7 @@ public class ContactDAOImpl extends AbstractDao<Contact> {
        super();
    }
 
-   @Override
-    public Optional<Contact> save(Contact c){
-        EntityManager eM = getEntityManager();
-        eM.getTransaction().begin();
 
-
-        eM.persist(c);
-
-      eM.getTransaction().commit();
-
-
-        return Optional.ofNullable(c);
-    }
     @Override
     public void delete(long id) {
         Optional<Contact> contactOpt = super.findById(id);

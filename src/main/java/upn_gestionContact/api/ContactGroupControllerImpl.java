@@ -20,9 +20,6 @@ public class ContactGroupControllerImpl  extends AbstractController<ContactGroup
     }
 
 
-    @PostMapping(path="/fullcontactgroup")
-    public void save(@RequestBody  ContactGroup contactGroup) {
 
-       getService().saveFullGroupContact(contactGroup);
-    }
+
 }

@@ -120,8 +120,9 @@ public class Contact implements Serializable {
     public void removeContactGroup(ContactGroup contactGroup) {
         if (contactGroups.contains(contactGroup))
             return ;
-        contactGroup.getContacts().remove(this);
-        contactGroups.remove(contactGroup);
+        this.contactGroups.remove(contactGroup);
+        contactGroup.removeContact(this);
+
 
     }
 
