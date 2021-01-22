@@ -1,5 +1,11 @@
 package upn_gestionContact.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import upn_gestionContact.entities.Contact;
+
+
+import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -42,8 +48,8 @@ public class ContactDAOImpl extends AbstractDao<Contact> {
        Optional<Contact> actualContactOpt = super.findById(id);
        if (actualContactOpt.isPresent()){
            Contact actualContact = actualContactOpt.get();
-           actualContact.setfname(updatedContact.getfname());
-           actualContact.setlname(updatedContact.getlname());
+           actualContact.setFname(updatedContact.getfname());
+           actualContact.setLname(updatedContact.getlname());
            actualContact.setEmail(updatedContact.getEmail());
        //    updatedContact.getAddress().setIdAddress(actualContact.getAddress().getIdAddress());
            actualContact.setAddress(updatedContact.getAddress());

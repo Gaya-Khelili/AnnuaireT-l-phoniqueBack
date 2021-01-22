@@ -91,6 +91,11 @@ public abstract class AbstractController<T> implements Controller<T> {
     }
 
     @Override
+    @PostMapping(path = "fillDB")
+    public void fillDatabase()
+    {
+        getService().fillDatabase();
+    }
     @PutMapping(path = "/contactGroup")
     public void updateContactGroup(@RequestBody ContactGroup updatedContactGroup) {
         getService().updateContactGroup(updatedContactGroup);

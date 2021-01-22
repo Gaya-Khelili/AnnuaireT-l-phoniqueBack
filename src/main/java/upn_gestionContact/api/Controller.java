@@ -23,6 +23,7 @@ public interface Controller<T>  {
     void addContact(long idc, long idg);
     void removeContactFromGroup(long idc, long idg);
     List<Contact> search(String criteria);
+    void fillDatabase();
     void updateContactGroup(ContactGroup updatedContactGroup);
     void deleteContactGroup(long id);
     void addContacts(ContactGroup contactGroup);

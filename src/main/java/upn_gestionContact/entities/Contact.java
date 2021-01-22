@@ -66,16 +66,15 @@ public class Contact implements Serializable {
         return fname;
     }
 
-    public void setfname(String fName){
+    public void setFname(String fName){
         this.fname = fName;
     }
-
 
     public String getlname(){
         return lname;
     }
 
-    public void setlname(String lname){
+    public void setLname(String lname){
         this.lname = lname;
     }
 

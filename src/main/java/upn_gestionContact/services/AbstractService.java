@@ -2,14 +2,18 @@ package upn_gestionContact.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import upn_gestionContact.dao.ContactDAOImpl;
 import upn_gestionContact.dao.ContactGroupDAOImpl;
 import upn_gestionContact.dao.Dao;
+import upn_gestionContact.entities.Address;
 import upn_gestionContact.entities.Contact;
+import upn_gestionContact.entities.Phone;
 import upn_gestionContact.entities.ContactGroup;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -103,6 +107,8 @@ abstract class AbstractService<T> implements Services<T> {
     }
 
     @Override
+    public void fillDatabase(){
+
     public void updateContactGroup( ContactGroup updatedContactGroup) {
         Optional<ContactGroup>  cg = contactGroupDao.findById(updatedContactGroup.getGroupId());
         cg.get().setGroupName(updatedContactGroup.getGroupName());

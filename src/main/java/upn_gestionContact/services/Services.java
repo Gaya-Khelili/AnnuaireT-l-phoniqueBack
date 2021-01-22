@@ -24,6 +24,8 @@ public interface Services<T> {
     void addContacts(ContactGroup entity);
     void removeContactFromGroup(long idC,long idG);
     List<Contact> search(String criteria);
+
+    void fillDatabase();
     void updateContactGroup(ContactGroup updatedContactGroup);
     void deleteContactGroup(long id);
 }
