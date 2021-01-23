@@ -21,10 +21,7 @@ public class ContactGroupServiceImpl   extends AbstractService<ContactGroup> {
         super();
     }
 
-    @Override
-    public void addContact(long idC, long idG) {
-        getDao().addContact(idC, idG);
-    }
+
 
 
 

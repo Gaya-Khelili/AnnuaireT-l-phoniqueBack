@@ -10,8 +10,11 @@ import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import upn_gestionContact.entities.Contact;
-import java.util.Optional;
+import upn_gestionContact.entities.ContactGroup;
 
+import java.util.HashSet;
+import java.util.Optional;
+import java.util.Set;
 
 
 @Repository
@@ -60,13 +63,16 @@ public class ContactDAOImpl extends AbstractDao<Contact> {
            actualContact.setPhones(updatedContact.getPhones());
            // update all groups in the contact
 
+            Set<ContactGroup> cg = new HashSet<ContactGroup>();
            updatedContact.getContactGroups().forEach(contactGroup -> {
-               //Optional<ContactGroup> contactGroupOpt = contactGroupDao.findById(contactGroup.getGroupId());
-               contactGroup.setGroupId(actualContact.getContactGroups().iterator().next().getGroupId());
-               contactGroup.getContacts().add(actualContact);
-               actualContact.getContactGroups().add(contactGroup);
-
+               Optional<ContactGroup> ocg = contactGroupDao.findById(contactGroup.getGroupId());
+               ocg.get().getContacts().add(actualContact);
+               ocg.get().setGroupName(contactGroup.getGroupName());
+               cg.add(ocg.get());
            } );
+
+
+           actualContact.setContactGroups(cg);
 
            getEntityManager().merge(actualContact);
            getEntityManager().getTransaction().commit();

@@ -1,5 +1,6 @@
 package upn_gestionContact.api;
 
+import org.springframework.web.bind.annotation.RequestBody;
 import upn_gestionContact.entities.Contact;
 import upn_gestionContact.entities.ContactGroup;
 
@@ -20,11 +21,10 @@ public interface Controller<T>  {
     void save(T entity);
     void delete(long id);
     void update(long id,T entity);
-    void addContact(long idc, long idg);
-    void removeContactFromGroup(long idc, long idg);
     List<Contact> search(String criteria);
     void fillDatabase();
     void updateContactGroup(ContactGroup updatedContactGroup);
     void deleteContactGroup(long id);
     void addContacts(ContactGroup contactGroup);
+    void removeContacts(ContactGroup contactGroup);
 }

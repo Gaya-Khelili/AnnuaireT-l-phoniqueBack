@@ -20,9 +20,8 @@ public interface Services<T> {
     void delete(long id);
     void update(long id,T entity);
     void saveFullContact(T contact);
-    void addContact(long idC,long idG);
     void addContacts(ContactGroup entity);
-    void removeContactFromGroup(long idC,long idG);
+    void removeContacts(ContactGroup entity);
     List<Contact> search(String criteria);
 
     void fillDatabase();

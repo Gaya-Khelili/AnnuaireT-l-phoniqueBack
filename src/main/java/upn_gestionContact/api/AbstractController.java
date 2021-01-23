@@ -1,7 +1,6 @@
 package upn_gestionContact.api;
 
 import org.springframework.web.bind.annotation.*;
-import upn_gestionContact.dao.Dao;
 import upn_gestionContact.entities.Contact;
 import upn_gestionContact.entities.ContactGroup;
 import upn_gestionContact.services.Services;
@@ -38,18 +37,6 @@ public abstract class AbstractController<T> implements Controller<T> {
     @GetMapping(path = "addressbycontact/{idContact}")
     public Optional<T> findByIdContact(@PathVariable("idContact") long idContact) {
         return getService().findByIdContact(idContact);
-    }
-
-    @Override
-    @PostMapping("addContact/{idContact}/{idGroup}")
-    public void addContact(@PathVariable("idContact")long idc,@PathVariable("idGroup") long idg) {
-        getService().addContact(idc,idg);
-    }
-
-    @Override
-    @DeleteMapping("removeContact/{idContact}/{idGroup}")
-    public void removeContactFromGroup(@PathVariable("idContact")long idc,@PathVariable("idGroup") long idg) {
-        getService().removeContactFromGroup(idc,idg);
     }
 
     @Override
@@ -106,7 +93,11 @@ public abstract class AbstractController<T> implements Controller<T> {
     public void addContacts(@RequestBody ContactGroup contactGroup) {
         getService().addContacts(contactGroup);
     }
-
+    @Override
+    @DeleteMapping(path="/deleteContacts")
+    public void removeContacts(@RequestBody ContactGroup contactGroup) {
+        getService().removeContacts(contactGroup);
+    }
     @Override
     @DeleteMapping(path = "contactGroup/{id}")
     public void deleteContactGroup(@PathVariable("id")long id) {

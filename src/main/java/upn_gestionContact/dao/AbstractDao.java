@@ -7,6 +7,7 @@ import upn_gestionContact.entities.ContactGroup;
 import upn_gestionContact.util.JpaUtil;
 
 import javax.persistence.EntityManager;
+import javax.swing.text.html.Option;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashSet;
@@ -68,36 +69,7 @@ abstract class AbstractDao<T> implements Dao<T> {
     public void update(long id,T entity) {
         //à redéfinir pour chaque classe car set sur les champs
     }
-    @Override
-    public void addContact(long idC, long idG) {
-        Optional<Contact> optionContact = contactDao.findById(idC);
-        Optional<ContactGroup> optionContactGroup =  contactGroupDao.findById(idG);
 
-        optionContact.get().addContactGroup(optionContactGroup.get());
-        // optionContactGroup.get().addContact(optionContact.get());
-
-        entityManager.getTransaction().begin();
-        entityManager.merge( optionContact.get());
-        entityManager.merge( optionContactGroup.get());
-
-
-        entityManager.getTransaction().commit();
-    }
-
-    @Override
-    public void removeContactFromGroup(long idC, long idG) {
-        Optional<Contact> optionContact = contactDao.findById(idC);
-        Optional<ContactGroup> optionContactGroup =  contactGroupDao.findById(idG);
-
-        optionContact.get().setContactGroups(new HashSet<>());//à modifier pour supprimé proprement
-        optionContactGroup.get().setContacts(new HashSet<>());
-        entityManager.getTransaction().begin();
-        // entityManager.remove( optionContact.get());
-        entityManager.merge(optionContactGroup.get());
-        entityManager.merge(optionContact.get());
-
-        entityManager.getTransaction().commit();
-    }
 
 
     @Override
@@ -110,6 +82,7 @@ abstract class AbstractDao<T> implements Dao<T> {
     public void updateContactGroup( ContactGroup updatedContactGroup) {
 
         entityManager.getTransaction().begin();
+
         //update all contacts in the group
         updatedContactGroup.getContacts().forEach(contact -> {
             contact.addContactGroup(updatedContactGroup);
@@ -156,7 +129,7 @@ abstract class AbstractDao<T> implements Dao<T> {
                        }
                    });
                    contact.setContactGroups(cgH);
-                  // contact.setContactGroups(new HashSet<>());
+
                    entityManager.merge(contact);
             });
 
@@ -169,8 +142,39 @@ abstract class AbstractDao<T> implements Dao<T> {
 
         }
 
+    @Override
+    public void deleteContactFromGroup(ContactGroup cg) {
+        entityManager.getTransaction().begin();
 
-        public EntityManager getEntityManager() {
+        Optional<ContactGroup> ocg = contactGroupDao.findById(cg.getGroupId());
+            Set<Contact> cH = new HashSet<Contact>();
+
+            ocg.get().getContacts().forEach(contact -> {
+                        Set<ContactGroup> cgH = new HashSet<ContactGroup>();
+                        Optional<Contact> oC = contactDao.findById(contact.getidContact());
+                        oC.get().getContactGroups().forEach(contactGroup -> {
+                            if(contactGroup.getGroupId() !=  ocg.get().getGroupId()){
+                                cgH.add(ocg.get());
+                            }
+                    });
+            oC.get().setContactGroups(cgH);
+            entityManager.merge(oC.get());
+        });
+        ocg.get().setContacts(cH);
+
+        ocg.get().getContacts().forEach(contact -> {
+            ocg.get().getContacts().remove(contact);
+            ocg.get();
+        });
+
+
+        entityManager.merge(ocg.get());
+        entityManager.getTransaction().commit();
+
+
+    }
+
+    public EntityManager getEntityManager() {
         return entityManager;
      }
 

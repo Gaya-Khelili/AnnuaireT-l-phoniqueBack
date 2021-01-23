@@ -11,10 +11,9 @@ public interface Dao<T> {
     Optional<T> save(T entity);
     void delete(long id);
     void update(long id,T entity);
-    void addContact(long idC,long idG);
     void addContacts(ContactGroup entity);
-    void removeContactFromGroup(long idC,long idG);
     void updateContactGroup( ContactGroup updatedContactGroup);
     void deleteContactGroup(long id);
+    void deleteContactFromGroup(ContactGroup entity);
     List<T> search(String criteria);
 }
