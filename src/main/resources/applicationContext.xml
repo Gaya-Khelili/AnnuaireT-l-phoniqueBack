@@ -12,14 +12,30 @@
         <property name="lname" value="Khelili"/>
         <property name="email" value="Gaya.khelili@parisnanterre.fr"/>
         <property name="address" ref="address1"/>
-        <property name="phones" ref="phones"/>
+        <property name="phones" ref="phones1"/>
+        <property name="contactGroups" ref="groups1"/>
+    </bean>
+
+    <bean id="contact2" class="upn_gestionContact.entities.Contact">
+        <property name="fname" value="Reda"/>
+        <property name="lname" value="Bendraou"/>
+        <property name="email" value="Reda.bendraou@parisnanterre.fr"/>
+        <property name="address" ref="address2"/>
+        <property name="phones" ref="phones2"/>
     </bean>
 
     <bean id="address1" class="upn_gestionContact.entities.Address">
-        <property name="street" value="street"/>
-        <property name="city" value="city"/>
-        <property name="zip" value="zip"/>
-        <property name="country" value="country"/>
+        <property name="street" value="16 rue universite"/>
+        <property name="city" value="Nanterre"/>
+        <property name="zip" value="92000"/>
+        <property name="country" value="France"/>
+    </bean>
+
+    <bean id="address2" class="upn_gestionContact.entities.Address">
+        <property name="street" value="Reda street"/>
+        <property name="city" value="Reda city"/>
+        <property name="zip" value="Reda zip"/>
+        <property name="country" value="Reda country"/>
     </bean>
 
     <bean id="phone1" class="upn_gestionContact.entities.Phone">
@@ -29,12 +45,25 @@
     </bean>
 
     <bean id="phone2" class="upn_gestionContact.entities.Phone">
-        <property name="phoneKind" value="prop"/>
-        <property name="phoneNumber" value="0658757575"/>
+        <property name="phoneKind" value="pro"/>
+        <property name="phoneNumber" value="0758757575"/>
         <property name="contact" ref="contact1"/>
     </bean>
 
-    <bean id="phones" class="java.util.HashSet">
+    <bean id="phone3" class="upn_gestionContact.entities.Phone">
+        <property name="phoneKind" value="perso"/>
+        <property name="phoneNumber" value="0658329795"/>
+        <property name="contact" ref="contact2"/>
+    </bean>
+
+    <bean id="phone4" class="upn_gestionContact.entities.Phone">
+        <property name="phoneKind" value="pro"/>
+        <property name="phoneNumber" value="0606060606"/>
+        <property name="contact" ref="contact2"/>
+    </bean>
+
+
+    <bean id="phones1" class="java.util.HashSet">
         <constructor-arg>
             <set>
                 <ref bean="phone1" />
@@ -43,8 +72,34 @@
         </constructor-arg>
     </bean>
 
+    <bean id="phones2" class="java.util.HashSet">
+        <constructor-arg>
+            <set>
+                <ref bean="phone3" />
+                <ref bean="phone4" />
+            </set>
+        </constructor-arg>
+    </bean>
+
     <bean id="group1" class="upn_gestionContact.entities.ContactGroup">
         <property name="groupName" value="M2miage"/>
+        <property name="contacts" ref="contacts1"/>
+    </bean>
+
+    <bean id="groups1" class="java.util.HashSet">
+        <constructor-arg>
+            <set>
+                <ref bean="group1" />
+            </set>
+        </constructor-arg>
+    </bean>
+
+    <bean id="contacts1" class="java.util.HashSet">
+        <constructor-arg>
+            <set>
+                <ref bean="contact1" />
+            </set>
+        </constructor-arg>
     </bean>
 
 </beans>
