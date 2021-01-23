@@ -41,4 +41,9 @@ public class ContactGroupServiceImpl   extends AbstractService<ContactGroup> {
         }
         return null;
     }
+
+    @Override
+    public void fillDatabase() {
+
+    }
 }

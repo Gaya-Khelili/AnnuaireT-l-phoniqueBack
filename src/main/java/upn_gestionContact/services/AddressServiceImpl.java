@@ -38,4 +38,9 @@ public class AddressServiceImpl extends AbstractService<Address>{
         return associatedContact;
     }
 
+    @Override
+    public void fillDatabase() {
+
+    }
+
 }

@@ -36,4 +36,9 @@ public class PhoneServiceImpl extends AbstractService<Phone> {
         });
         return associatedContact;
     }
+
+    @Override
+    public void fillDatabase() {
+
+    }
 }
