@@ -54,29 +54,10 @@ public class ContactServiceImpl extends AbstractService<Contact> {
     public void fillDatabase(){
 
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
-        Contact contact = (Contact) context.getBean("contact1");
-      //  Address address = (Address) context.getBean("address1");
-
-     //   Set<Phone> phones = new HashSet<>();
-        Set<Contact> contacts = new HashSet<>();
-        Set<ContactGroup> groups = new HashSet<>();
-
-    /*    Phone phone1 = (Phone) context.getBean("phone1");
-        Phone phone2 = (Phone) context.getBean("phone2");
-        phones.add(phone1);
-        phones.add(phone2);
-
-        contact.setAddress(address);
-        contact.setPhones(phones);
-        phones.forEach(phone -> phone.setContact(contact));
-*/
-        ContactGroup group = (ContactGroup) context.getBean("group1");
-        groups.add(group);
-        contacts.add(contact);
-        contact.setContactGroups(groups);
-        group.setContacts(contacts);
-
-        super.getDao().save(contact);
+        Contact contact1 = (Contact) context.getBean("contact1");
+        Contact contact2 = (Contact) context.getBean("contact2");
+        super.getDao().save(contact1);
+        super.getDao().save(contact2);
     }
 
 
