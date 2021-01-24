@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -126,6 +127,23 @@ public class Contact implements Serializable {
 
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contact contact = (Contact) o;
+        return idContact == contact.idContact &&
+                Objects.equals(fname, contact.fname) &&
+                Objects.equals(lname, contact.lname) &&
+                Objects.equals(email, contact.email) &&
+                Objects.equals(address, contact.address) &&
+                Objects.equals(phones, contact.phones);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fname, lname, email, idContact, address, phones);
+    }
 
     @Override
     public String toString() {

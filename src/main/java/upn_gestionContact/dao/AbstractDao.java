@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 abstract class AbstractDao<T> implements Dao<T> {
@@ -69,8 +70,6 @@ abstract class AbstractDao<T> implements Dao<T> {
     public void update(long id,T entity) {
         //à redéfinir pour chaque classe car set sur les champs
     }
-
-
 
     @Override
     public  List<T> search(String criteria){
@@ -146,7 +145,7 @@ abstract class AbstractDao<T> implements Dao<T> {
     public void deleteContactFromGroup(ContactGroup cg) {
       entityManager.getTransaction().begin();
 
-        // marche niveau base
+        // pour tous les contacts à delete
        cg.getContacts().forEach(contact -> {
                 Set<ContactGroup> cgH = new HashSet<ContactGroup>();
                 Optional<Contact> oC = contactDao.findById(contact.getidContact());
@@ -160,14 +159,37 @@ abstract class AbstractDao<T> implements Dao<T> {
 
                 c.setContactGroups(cgH);
 
-               // contactg.getContacts().remove(c);
-
-            //cH.add(oC.get());
             entityManager.merge(c);
         });
 
+       //pour le groupe en base
+        Optional<ContactGroup> contactGroupObj = contactGroupDao.findById(cg.getGroupId());
 
-        entityManager.merge(cg);
+        if (contactGroupObj.isPresent()){
+
+
+            Set<Contact> contactsToSave = new HashSet<>();
+
+               Set<Long> idContactToDelete = new HashSet<>();
+               idContactToDelete = cg.getContacts()
+                       .stream()
+                       .map(Contact::getidContact)
+                       .collect(Collectors.toSet());
+
+               Set<Long> allIdContactInGroup =  contactGroupObj.get().getContacts()
+                       .stream()
+                       .map(Contact::getidContact)
+                       .collect(Collectors.toSet());
+
+            Set<Long> finalIdContactToDelete = idContactToDelete;
+            allIdContactInGroup.forEach(id -> {
+                   if (!finalIdContactToDelete.contains(id)) {
+                       contactsToSave.add(contactDao.findById(id).get());
+                   }
+               });
+            contactGroupObj.get().setContacts(contactsToSave);
+            entityManager.merge(contactGroupObj.get());
+        }
 
         entityManager.getTransaction().commit();
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -75,5 +76,17 @@ public class ContactGroup implements Serializable {
         return "ContactGroup [groupId=" + groupId + ", groupName=" + groupName  + "contact "+ contacts.stream().map(Contact::getidContact).collect(Collectors.toList()) + "]";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ContactGroup that = (ContactGroup) o;
+        return groupId == that.groupId &&
+                Objects.equals(groupName, that.groupName);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(groupName, groupId);
+    }
 }

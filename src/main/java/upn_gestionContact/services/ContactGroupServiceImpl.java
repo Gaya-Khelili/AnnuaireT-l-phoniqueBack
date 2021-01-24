@@ -7,6 +7,7 @@ import upn_gestionContact.dao.ContactGroupDAOImpl;
 import upn_gestionContact.entities.Contact;
 import upn_gestionContact.entities.ContactGroup;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -45,5 +46,26 @@ public class ContactGroupServiceImpl   extends AbstractService<ContactGroup> {
     @Override
     public void fillDatabase() {
 
+    }
+
+    public Set<Contact> getAllContactNotInSelectedGroup(Long id){
+
+        Optional<ContactGroup> contactGroupOpt = super.getDao().findById(id);
+        if (contactGroupOpt.isPresent()){
+            List<Contact> contactList = contactDao.findAll();
+            Set<Contact> contactSet = new HashSet<>();
+
+            contactList.forEach(contact -> {
+                Set<Long> allIdGroup = contact.getContactGroups()
+                        .stream()
+                        .map(ContactGroup::getGroupId)
+                        .collect(Collectors.toSet());
+
+                if (!allIdGroup.contains(contactGroupOpt.get().getGroupId()))
+                    contactSet.add(contact);
+            });
+            return contactSet;
+        }
+        return null;
     }
 }
