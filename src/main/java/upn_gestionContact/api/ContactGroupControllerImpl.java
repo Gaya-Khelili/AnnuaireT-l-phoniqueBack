@@ -3,6 +3,7 @@ package upn_gestionContact.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import upn_gestionContact.entities.Contact;
 import upn_gestionContact.entities.ContactGroup;
 import upn_gestionContact.services.ContactGroupServiceImpl;
 import upn_gestionContact.services.Services;
@@ -20,6 +21,11 @@ public class ContactGroupControllerImpl  extends AbstractController<ContactGroup
     @Override
     public Services<ContactGroup> getService(){
         return contactGroupService;
+    }
+
+    @GetMapping(path="/getAllContactNotInSelectedGroup/{id}")
+    public Set<Contact> getAllContactNotInSelectedGroup(@PathVariable("id") Long id){
+        return contactGroupService.getAllContactNotInSelectedGroup(id);
     }
 
 

@@ -126,15 +126,9 @@ abstract class AbstractService<T> implements Services<T> {
 
     @Override
     public void removeContacts(ContactGroup entity) {
-        //Optional<ContactGroup>  cg = contactGroupDao.findById(entity.getGroupId());
-
-        entity.getContacts().forEach(contact -> {
-            Optional<Contact>  c = contactDao.findById(contact.getidContact());
-
-            entity.getContacts().remove(c.get());
-        });
 
         this.dao.deleteContactFromGroup(entity);
 
     }
+
 }
