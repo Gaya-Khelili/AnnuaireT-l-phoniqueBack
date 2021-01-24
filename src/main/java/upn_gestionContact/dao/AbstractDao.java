@@ -141,30 +141,18 @@ abstract class AbstractDao<T> implements Dao<T> {
 
 
         }
-
+    /// c cette fontion
     @Override
     public void deleteContactFromGroup(ContactGroup cg) {
       entityManager.getTransaction().begin();
 
-          //  Optional<ContactGroup> ocg = contactGroupDao.findById(cg.getGroupId());
-           // ContactGroup contactg = ocg.get();
-            //enlever le contact du group
-        /**    Set<Contact> cH = new HashSet<Contact>();
-        contactg.getContacts().forEach(contact -> {
-                cg.getContacts().forEach(contact1 -> {
-                    if(contact.getidContact()== contact1.getidContact()){
-                        cH.add(contact);
-                    }
-                });
-            });
-            // garder les autres group lié au contact
-        contactg.setContacts(cH);**/
-        cg.getContacts().forEach(contact -> {
+        // marche niveau base
+       cg.getContacts().forEach(contact -> {
                 Set<ContactGroup> cgH = new HashSet<ContactGroup>();
-                        Optional<Contact> oC = contactDao.findById(contact.getidContact());
-                        Contact c  = oC.get();
+                Optional<Contact> oC = contactDao.findById(contact.getidContact());
+                Contact c  = oC.get();
                   // garder les autre groups lié au contacts
-                        c.getContactGroups().forEach(contactGroup -> {
+                c.getContactGroups().forEach(contactGroup -> {
                             if(contactGroup.getGroupId() !=  cg.getGroupId()){
                                 cgH.add(contactGroup);
                             }
@@ -177,6 +165,7 @@ abstract class AbstractDao<T> implements Dao<T> {
             //cH.add(oC.get());
             entityManager.merge(c);
         });
+
 
         entityManager.merge(cg);
 
