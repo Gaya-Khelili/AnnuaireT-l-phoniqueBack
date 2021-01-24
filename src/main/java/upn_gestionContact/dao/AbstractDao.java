@@ -144,34 +144,54 @@ abstract class AbstractDao<T> implements Dao<T> {
 
     @Override
     public void deleteContactFromGroup(ContactGroup cg) {
-        entityManager.getTransaction().begin();
+      entityManager.getTransaction().begin();
 
-        Optional<ContactGroup> ocg = contactGroupDao.findById(cg.getGroupId());
-            Set<Contact> cH = new HashSet<Contact>();
-
-            ocg.get().getContacts().forEach(contact -> {
-                        Set<ContactGroup> cgH = new HashSet<ContactGroup>();
+          //  Optional<ContactGroup> ocg = contactGroupDao.findById(cg.getGroupId());
+           // ContactGroup contactg = ocg.get();
+            //enlever le contact du group
+        /**    Set<Contact> cH = new HashSet<Contact>();
+        contactg.getContacts().forEach(contact -> {
+                cg.getContacts().forEach(contact1 -> {
+                    if(contact.getidContact()== contact1.getidContact()){
+                        cH.add(contact);
+                    }
+                });
+            });
+            // garder les autres group lié au contact
+        contactg.setContacts(cH);**/
+        cg.getContacts().forEach(contact -> {
+                Set<ContactGroup> cgH = new HashSet<ContactGroup>();
                         Optional<Contact> oC = contactDao.findById(contact.getidContact());
-                        oC.get().getContactGroups().forEach(contactGroup -> {
-                            if(contactGroup.getGroupId() !=  ocg.get().getGroupId()){
-                                cgH.add(ocg.get());
+                        Contact c  = oC.get();
+                  // garder les autre groups lié au contacts
+                        c.getContactGroups().forEach(contactGroup -> {
+                            if(contactGroup.getGroupId() !=  cg.getGroupId()){
+                                cgH.add(contactGroup);
                             }
-                    });
-            oC.get().setContactGroups(cgH);
-            entityManager.merge(oC.get());
+                      });
+
+                c.setContactGroups(cgH);
+
+               // contactg.getContacts().remove(c);
+
+            //cH.add(oC.get());
+            entityManager.merge(c);
         });
-        ocg.get().setContacts(cH);
 
-        ocg.get().getContacts().forEach(contact -> {
-            ocg.get().getContacts().remove(contact);
-            ocg.get();
-        });
+        entityManager.merge(cg);
 
-
-        entityManager.merge(ocg.get());
         entityManager.getTransaction().commit();
 
+        /**
+        entityManager.getTransaction().begin();
+        entityManager.merge(cg);
+        cg.getContacts().forEach(contact -> {
+            contact.getContactGroups().remove(cg);
+            entityManager.merge(contact);
+        });
 
+
+        entityManager.getTransaction().commit();**/
     }
 
     public EntityManager getEntityManager() {

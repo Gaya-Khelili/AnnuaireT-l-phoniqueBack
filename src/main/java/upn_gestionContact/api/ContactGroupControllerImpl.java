@@ -6,6 +6,9 @@ import org.springframework.web.bind.annotation.*;
 import upn_gestionContact.entities.ContactGroup;
 import upn_gestionContact.services.ContactGroupServiceImpl;
 import upn_gestionContact.services.Services;
+
+import java.util.Set;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("api/groupContact")
 @RestController
@@ -18,8 +21,6 @@ public class ContactGroupControllerImpl  extends AbstractController<ContactGroup
     public Services<ContactGroup> getService(){
         return contactGroupService;
     }
-
-
 
 
 }

@@ -7,6 +7,8 @@ import upn_gestionContact.entities.Contact;
 import upn_gestionContact.services.ContactServiceImpl;
 import upn_gestionContact.services.Services;
 
+import java.util.Set;
+
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("api/contact")
 @RestController
@@ -25,4 +27,7 @@ public class ContactControllerImpl extends AbstractController<Contact> {
     public void saveFullContact(@RequestBody Contact contact){
         getService().saveFullContact(contact);
     }
+
+
+
 }
