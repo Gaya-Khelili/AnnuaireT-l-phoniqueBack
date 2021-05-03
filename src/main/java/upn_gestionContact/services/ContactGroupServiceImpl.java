@@ -68,4 +68,27 @@ public class ContactGroupServiceImpl   extends AbstractService<ContactGroup> {
         }
         return null;
     }
+
+
+    public 	Set<String> getFichesDepaiesDeLemployer(String nameEmployer){
+        Set<String> ficheDepaye = new HashSet<String>();
+        Employer gestionnaire = (Employer) entityManager.createQuery
+
+                ("SELECT e FROM Employer em where em.employerName = :nameEmployer").setParameter("nameEmployer",nameEmployer)
+                .getSingleResult();
+
+        for (:
+             ) {
+            
+        }(ficheDePaye gestionnaire.getFichesDepaies()){
+
+            if(ficheDepaye.attributionEmployer.getId() == Employer.getId()){
+                ficheDepaye.add(ficheDepaye.attributionEmployer.toString());
+            }
+        }
+
+
+        return ficheDepaye;
+    }
+
 }

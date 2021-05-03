@@ -5,9 +5,7 @@ import org.springframework.stereotype.Repository;
 import upn_gestionContact.entities.Contact;
 import upn_gestionContact.entities.ContactGroup;
 import upn_gestionContact.util.JpaUtil;
-
 import javax.persistence.EntityManager;
-import javax.swing.text.html.Option;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.HashSet;
@@ -55,8 +53,8 @@ abstract class AbstractDao<T> implements Dao<T> {
         getGenericClass();
 
         entityManager.getTransaction().begin();
-            entityManager.persist(entity);
-            entityManager.getTransaction().commit();
+        entityManager.persist(entity);
+        entityManager.getTransaction().commit();
 
         return Optional.ofNullable(entity);
     }
@@ -193,16 +191,7 @@ abstract class AbstractDao<T> implements Dao<T> {
 
         entityManager.getTransaction().commit();
 
-        /**
-        entityManager.getTransaction().begin();
-        entityManager.merge(cg);
-        cg.getContacts().forEach(contact -> {
-            contact.getContactGroups().remove(cg);
-            entityManager.merge(contact);
-        });
 
-
-        entityManager.getTransaction().commit();**/
     }
 
     public EntityManager getEntityManager() {
